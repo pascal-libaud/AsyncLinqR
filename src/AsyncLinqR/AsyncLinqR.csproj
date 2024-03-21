@@ -2,8 +2,30 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+	  <Description>A library that extends Linq's methods for IAsyncEnumerable&lt;T&gt;.
+It allows to work asynchronously.
+The library supports CancellationToken to be able to cancel processing.</Description>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>AsyncLinqR</Title>
+    <Authors>Pascal LIBAUD</Authors>
+    <PackageProjectUrl>https://github.com/pascal-libaud/AsyncLinqR</PackageProjectUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/pascal-libaud/AsyncLinqR</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Linq;async;await;asynchronous;Task;IAsyncEnumerable;CancellationToken</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
