@@ -1,3 +1,4 @@
+#pragma warning disable CS8604 // Possible null reference argument.
 namespace AsyncLinqR.Tests;
 
 public class ToListAsyncTest

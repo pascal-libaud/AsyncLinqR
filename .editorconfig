@@ -1,3 +1,7 @@
 [*.yml]
 indent_style = space
 indent_size = 2
+
+[*.cs]
+# IDE0039: Utiliser une fonction locale
+csharp_style_prefer_local_over_anonymous_function = false
