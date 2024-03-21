@@ -26,4 +26,4 @@ jobs:
       working-directory: ./src
 
     - name: Push package to NuGet.org
-      run: dotnet nuget push ./packages/AsyncLinqR${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PACKAGES }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ./packages/AsyncLinqR.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_PACKAGES }} --source https://api.nuget.org/v3/index.json
