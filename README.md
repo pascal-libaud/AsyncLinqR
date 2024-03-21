@@ -23,7 +23,7 @@ These methods allow you to perform data query operations asynchronously.
 ```csharp
 using AsyncLinqR;
 
-var result = await myCollection.WhereAsync(x => await PredicateAsync(x)).ToListAsync();
+var result = await myCollection.WhereAsync(async x => await PredicateAsync(x)).ToListAsync();
 ```
 
 Map a collection asynchronously :
@@ -70,7 +70,7 @@ Ces méthodes vous permettent d'effectuer des opérations de requête de donnée
 ```csharp
 using AsyncLinqR;
 
-var result = await myCollection.WhereAsync(x => await PredicateAsync(x)).ToListAsync();
+var result = await myCollection.WhereAsync(async x => await PredicateAsync(x)).ToListAsync();
 ```
 
 Mapper une collection de manière asynchrone :
