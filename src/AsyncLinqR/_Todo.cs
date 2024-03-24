@@ -2,7 +2,6 @@
 
 // JoinAsync, CrossJoinAsync
 // GroupByAsync
-// OrderByAsync, ThenByAsync
 // SkipAsync, SkipLastAsync
 // ZipAsync
 // RepeatAsync

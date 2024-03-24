@@ -1,8 +1,9 @@
 // TODO Créer les tests pour les méthodes ci-dessous
 
-// SelectMany, SelectManyAsync
-// Take<T>
-// TakeAsync<T>
+// AggregateAsync
+
+// SelectManyAsync
+// TakeAsync
 
 // ConcatAsync
 
@@ -11,13 +12,8 @@
 
 // Distinct<T> vérifier qu'on n'énumère pas toute la liste dès le début, via un break dans le test.
 // DistinctBy
-// DistinctAsync
-// DistinctByAsync
 
-// Range
 // RangeAsync
-
-// GroupBy
 
 // WhereAsync
 
