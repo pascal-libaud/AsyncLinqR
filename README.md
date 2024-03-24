@@ -1,6 +1,8 @@
 
 # AsyncLinqR
 
+![CI](https://github.com/pascal-libaud/AsyncLinqR/workflows/Continuous%20Integration/badge.svg) [![NuGet](https://img.shields.io/nuget/v/AsyncLinqR.svg)](https://www.nuget.org/packages/AsyncLinqR/)
+
 ## English version
 
 [Version française juste en dessous](#version-fran%C3%A7aise)
