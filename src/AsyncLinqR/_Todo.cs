@@ -11,7 +11,7 @@
 // ForEach()
 
 // Nouveautés .Net 9
-// Enumerable.CountBy, AggregateBy, Index
+// Enumerable.CountBy, AggregateBy
 
 // TakeLast, TakeWhile
 // SkipUntil, 

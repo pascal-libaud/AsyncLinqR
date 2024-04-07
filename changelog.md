@@ -7,3 +7,6 @@ Initial version.
 ## 1.0.1
 
  - Add ToHashSetAsync
+ - Add IndexAsync
+ - Add indexes on SelectAsync 
+ - Add CancellationToken support on SelectAsync

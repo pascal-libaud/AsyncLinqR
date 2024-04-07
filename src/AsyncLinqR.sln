@@ -5,7 +5,15 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncLinqR", "AsyncLinqR\AsyncLinqR.csproj", "{6D16A7C1-B1E6-4B7B-A50E-D578F04EE54B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncLinqR.Tests", "AsyncLinqR.Tests\AsyncLinqR.Tests.csproj", "{1C9C1DE0-22C6-415A-9723-58524A319F73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncLinqR.Tests", "AsyncLinqR.Tests\AsyncLinqR.Tests.csproj", "{1C9C1DE0-22C6-415A-9723-58524A319F73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{95A7C4F1-A7E7-4D66-8E31-A5260C43A83C}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\changelog.md = ..\changelog.md
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

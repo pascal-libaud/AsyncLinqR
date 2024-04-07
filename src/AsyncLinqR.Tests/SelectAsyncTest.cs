@@ -67,4 +67,32 @@ public class SelectAsyncTest
 
         Assert.Equal(expected, source);
     }
+
+    [Fact]
+    public async Task SelectAsync_with_index_should_have_got_right_indexes()
+    {
+        Assert.All(await AsyncLinq.RangeAsync(10).SelectAsync((_, i) => i).ToListAsync(), (x, i) => Assert.Equal(x, i));
+    }
+
+    [Fact]
+    public async Task SelectAsync_should_pass_cancellation_token()
+    {
+        var token = new CancellationTokenSource();
+        await token.CancelAsync();
+
+        var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
+        var func = async () => await source.SelectAsync(x => x, token.Token).ToListAsync();
+        await func.Should().ThrowAsync<OperationCanceledException>();
+    }
+
+    [Fact]
+    public async Task SelectAsync_should_receive_and_pass_cancellation_token()
+    {
+        var token = new CancellationTokenSource();
+        await token.CancelAsync();
+
+        var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
+        var func = async () => await source.SelectAsync(x => x).ToListAsync(token.Token);
+        await func.Should().ThrowAsync<OperationCanceledException>();
+    }
 }
