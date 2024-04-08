@@ -7,10 +7,10 @@
 
 // ConcatAsync
 
-// Zip<T, U, V>
-// ZipFull<T, U, V> 
+// Zip
+// ZipFull 
 
-// Distinct<T> vérifier qu'on n'énumère pas toute la liste dès le début, via un break dans le test.
+// Distinct<T> vérifier qu'on n'énumère pas toute la liste dès le début
 // DistinctBy
 
 // RangeAsync
@@ -18,5 +18,6 @@
 // WhereAsync
 
 // CrossJoin
+// Join, Union, Intersect, Except
 
 // ToArray, ToArrayAsync
