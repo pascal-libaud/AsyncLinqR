@@ -10,3 +10,4 @@ Initial version.
  - Add IndexAsync
  - Add indexes on SelectAsync 
  - Add CancellationToken support on SelectAsync
+ - Add OrderAsync
