@@ -1,6 +1,6 @@
 ﻿namespace AsyncLinqR.Tests;
 
-public class FirstOrDefaultAsyncAsyncTest
+public class FirstOrDefaultAsyncTest
 {
     [Fact]
     public async Task FirstOrDefaultAsync_should_work_as_expected()

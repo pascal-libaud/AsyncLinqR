@@ -1,6 +1,8 @@
-﻿namespace AsyncLinqR.Tests;
+﻿using System.Linq;
 
-public class LastOrDefaultAsyncAsyncTest
+namespace AsyncLinqR.Tests;
+
+public class LastOrDefaultAsyncTest
 {
     [Fact]
     public async Task LastOrDefaultAsync_should_work_as_expected()
@@ -83,5 +85,4 @@ public class LastOrDefaultAsyncAsyncTest
         var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().LastOrDefaultAsync(x => x == 2, token.Token);
         await func.Should().ThrowAsync<OperationCanceledException>();
     }
-
 }
