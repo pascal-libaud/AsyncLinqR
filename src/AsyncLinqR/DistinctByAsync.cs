@@ -2,9 +2,9 @@
 
 public static partial class AsyncLinq
 {
-    public static async IAsyncEnumerable<T> DistinctByAsync<T, U>(this IAsyncEnumerable<T> source, Func<T, U> selector)
+    public static async IAsyncEnumerable<TSource> DistinctByAsync<TSource, TKey>(this IAsyncEnumerable<TSource> source, Func<TSource, TKey> selector)
     {
-        var hash = new HashSet<U>();
+        var hash = new HashSet<TKey>();
         await foreach (var item in source)
         {
             if (hash.Add(selector(item)))
@@ -12,9 +12,9 @@ public static partial class AsyncLinq
         }
     }
 
-    public static async IAsyncEnumerable<T> DistinctByAsync<T, U>(this IEnumerable<T> source, Func<T, Task<U>> selector)
+    public static async IAsyncEnumerable<TSource> DistinctByAsync<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, Task<TKey>> selector)
     {
-        var hash = new HashSet<U>();
+        var hash = new HashSet<TKey>();
         foreach (var item in source)
         {
             if (hash.Add(await selector(item)))
@@ -22,9 +22,9 @@ public static partial class AsyncLinq
         }
     }
 
-    public static async IAsyncEnumerable<T> DistinctByAsync<T, U>(this IAsyncEnumerable<T> source, Func<T, Task<U>> selector)
+    public static async IAsyncEnumerable<TSource> DistinctByAsync<TSource, TKey>(this IAsyncEnumerable<TSource> source, Func<TSource, Task<TKey>> selector)
     {
-        var hash = new HashSet<U>();
+        var hash = new HashSet<TKey>();
         await foreach (var item in source)
         {
             if (hash.Add(await selector(item)))
