@@ -9,6 +9,7 @@ Initial version.
  - Add ToHashSetAsync
  - Add IndexAsync
  - Add indexes on SelectAsync 
- - Add CancellationToken support on SelectAsync
  - Add OrderAsync
- - Add JoinAsync 
+ - Add JoinAsync
+ - Add CancellationToken support on SelectAsync
+ - Add CancellationToken support on DistinctByAsync
