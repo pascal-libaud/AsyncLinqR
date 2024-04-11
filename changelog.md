@@ -6,11 +6,14 @@ Initial version.
 
 ## Next
 
- - Add IndexAsync
- - Add JoinAsync
- - Add OrderAsync
- - Add ToHashSetAsync
+ - Add new methods:
+	 - Add IndexAsync
+	 - Add JoinAsync
+	 - Add OrderAsync
+	 - Add ToHashSetAsync
  - Add indexes on SelectAsync
- - Add CancellationToken support on DistinctByAsync
- - Add CancellationToken support on SelectAsync
- - Add CancellationToken support on SingleOrDefaultAsync
+ - Add CancellationToken support on:
+	 - DistinctByAsync
+	 - SelectAsync
+	 - SingleAsync
+	 - SingleOrDefaultAsync

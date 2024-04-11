@@ -75,5 +75,4 @@ public class SingleOrDefaultAsyncTest
         var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleOrDefaultAsync(x => x == 2, token.Token);
         await func.Should().ThrowAsync<OperationCanceledException>();
     }
-
 }
