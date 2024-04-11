@@ -65,4 +65,15 @@ public class SingleOrDefaultAsyncTest
         var func = () => AsyncLinq.RangeNullableAsync(0, 10).SingleOrDefaultAsync(x => x == 20);
         await func.Should().NotThrowAsync();
     }
+
+    [Fact]
+    public async Task SingleOrDefaultAsync_should_pass_cancellation_token()
+    {
+        var token = new CancellationTokenSource();
+        await token.CancelAsync();
+
+        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleOrDefaultAsync(x => x == 2, token.Token);
+        await func.Should().ThrowAsync<OperationCanceledException>();
+    }
+
 }

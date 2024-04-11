@@ -2,9 +2,9 @@
 
 public static partial class AsyncLinq
 {
-    public static async Task<T?> SingleOrDefaultAsync<T>(this IAsyncEnumerable<T> source)
+    public static async Task<T?> SingleOrDefaultAsync<T>(this IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
     {
-        await using var enumerator = source.GetAsyncEnumerator();
+        await using var enumerator = source.GetAsyncEnumerator(cancellationToken);
         if (await enumerator.MoveNextAsync())
         {
             var candidate = enumerator.Current;
@@ -18,11 +18,11 @@ public static partial class AsyncLinq
         return default;
     }
 
-    public static async Task<T?> SingleOrDefaultAsync<T>(this IAsyncEnumerable<T> source, Func<T, bool> predicate)
+    public static async Task<T?> SingleOrDefaultAsync<T>(this IAsyncEnumerable<T> source, Func<T, bool> predicate, CancellationToken cancellationToken = default)
     {
         bool found = false;
         T candidate = default!;
-        await foreach (var item in source)
+        await foreach (var item in source.WithCancellation(cancellationToken))
             if (predicate(item))
                 if (!found)
                 {
@@ -38,11 +38,15 @@ public static partial class AsyncLinq
         return candidate!;
     }
 
-    public static async Task<T?> SingleOrDefaultAsync<T>(this IEnumerable<T> source, Func<T, Task<bool>> predicate)
+    public static async Task<T?> SingleOrDefaultAsync<T>(this IEnumerable<T> source, Func<T, Task<bool>> predicate, CancellationToken cancellationToken = default)
     {
         bool found = false;
         T candidate = default!;
+        
+        cancellationToken.ThrowIfCancellationRequested();
         foreach (var item in source)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
             if (await predicate(item))
                 if (!found)
                 {
@@ -51,6 +55,7 @@ public static partial class AsyncLinq
                 }
                 else
                     throw new InvalidOperationException("Sequence contains more than one matching element");
+        }
 
         if (!found)
             return default;
@@ -58,11 +63,11 @@ public static partial class AsyncLinq
         return candidate!;
     }
 
-    public static async Task<T?> SingleOrDefaultAsync<T>(this IAsyncEnumerable<T> source, Func<T, Task<bool>> predicate)
+    public static async Task<T?> SingleOrDefaultAsync<T>(this IAsyncEnumerable<T> source, Func<T, Task<bool>> predicate, CancellationToken cancellationToken = default)
     {
         bool found = false;
         T candidate = default!;
-        await foreach (var item in source)
+        await foreach (var item in source.WithCancellation(cancellationToken))
             if (await predicate(item))
                 if (!found)
                 {
