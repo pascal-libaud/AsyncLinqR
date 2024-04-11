@@ -15,5 +15,6 @@ Initial version.
  - Add CancellationToken support on:
 	 - DistinctByAsync
 	 - SelectAsync
+	 - SelectManyAsync
 	 - SingleAsync
 	 - SingleOrDefaultAsync
