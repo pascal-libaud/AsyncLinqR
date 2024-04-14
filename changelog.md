@@ -13,6 +13,7 @@ Initial version.
 	 - Add OrderAsync
 	 - Add SkipAsync
 	 - Add SkipLastAsync
+	 - Add SkipWhileAsync
 	 - Add TakeLastAsync
 	 - Add TakeWhileAsync
 	 - Add ToHashSetAsync
