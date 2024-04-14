@@ -6,16 +6,14 @@
 // ZipAsync
 // RepeatAsync
 
-// Enumerable.DefaultIfEmpty()
-
 // ForEach()
 
 // Nouveautés .Net 9
 // Enumerable.CountBy, AggregateBy
 
 // TakeLast, TakeWhile
-// SkipUntil, 
-// SkipAsync, SkipLastAsync
+// SkipUntil,
+// SkipLastAsync
 
 // Enumerable.ToDictionary()
 // Enumerable.ToLookup()

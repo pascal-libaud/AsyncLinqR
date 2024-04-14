@@ -30,5 +30,4 @@ public class ReverseAsyncTest
         var sut = async () => await source.ReverseAsync().ToListAsync(token.Token);
         await sut.Should().ThrowAsync<OperationCanceledException>();
     }
-
 }

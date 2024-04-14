@@ -1,9 +1,7 @@
 // TODO Créer les tests pour les méthodes ci-dessous
 
 // AggregateAsync
-
 // SelectManyAsync
-// TakeAsync
 
 // ConcatAsync
 
