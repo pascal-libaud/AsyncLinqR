@@ -14,6 +14,7 @@ Initial version.
 	 - Add SkipAsync
 	 - Add SkipLastAsync
 	 - Add TakeLastAsync
+	 - Add TakeWhileAsync
 	 - Add ToHashSetAsync
  - Add indexes on SelectAsync
  - Add CancellationToken support on:
