@@ -5,8 +5,6 @@
 // ZipAsync
 // RepeatAsync
 
-// ForEach()
-
 // Nouveautés .Net 9
 // Enumerable.CountBy, AggregateBy
 
