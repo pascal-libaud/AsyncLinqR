@@ -11,5 +11,4 @@
 // Nouveautés .Net 9
 // Enumerable.CountBy, AggregateBy
 
-// Enumerable.ToDictionary()
 // Enumerable.ToLookup()

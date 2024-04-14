@@ -16,7 +16,7 @@ public class ToListAsyncTest
     }
 
     [Fact]
-    public async Task ToList_should_enumerate_each_item()
+    public async Task ToListAsync_should_enumerate_each_item()
     {
         var spy = SpyAsyncEnumerable.GetValuesAsync();
 
