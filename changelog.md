@@ -12,6 +12,7 @@ Initial version.
 	 - Add JoinAsync
 	 - Add OrderAsync
 	 - Add SkipAsync
+	 - Add SkipLastAsync
 	 - Add ToHashSetAsync
  - Add indexes on SelectAsync
  - Add CancellationToken support on:

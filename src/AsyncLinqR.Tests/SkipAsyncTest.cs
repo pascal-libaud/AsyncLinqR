@@ -28,6 +28,20 @@ public class SkipAsyncTest
     }
 
     [Fact]
+    public async Task SkipAsync_should_enumerate_each_item_once()
+    {
+        var sut = (IAsyncEnumerable<int> x) => x.SkipAsync(1).ToListAsync();
+        await sut.Should_enumerate_each_item_once();
+    }
+
+    [Fact]
+    public async Task SkipAsync_should_not_enumerate_early()
+    {
+        var sut = (IAsyncEnumerable<int> x) => x.SkipAsync(1);
+        await sut.Should_not_enumerate_early();
+    }
+
+    [Fact]
     public async Task SkipAsync_should_pass_cancellation_token()
     {
         var token = new CancellationTokenSource();

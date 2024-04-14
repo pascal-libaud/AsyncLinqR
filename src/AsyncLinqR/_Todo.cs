@@ -13,7 +13,6 @@
 
 // TakeLast, TakeWhile
 // SkipUntil,
-// SkipLastAsync
 
 // Enumerable.ToDictionary()
 // Enumerable.ToLookup()
