@@ -13,13 +13,13 @@ public class ToHashSetAsyncTest
     [Fact]
     public async Task ToHashSetAsync_should_throw_on_null_enumerable()
     {
-        var func = async () =>
+        var sut = async () =>
         {
             IAsyncEnumerable<int>? enumerable = null;
             return await enumerable.ToHashSetAsync();
         };
 
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<NullReferenceException>(sut);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public class ToHashSetAsyncTest
     [Fact]
     public async Task ToHashSetAsync_should_enumerate_each_item_once()
     {
-        var omToHashSetAsync = async (IAsyncEnumerable<int> x) => await x.ToHashSetAsync();
-        await omToHashSetAsync.Should_enumerate_each_item_once();
+        var sut = async (IAsyncEnumerable<int> x) => await x.ToHashSetAsync();
+        await sut.Should_enumerate_each_item_once();
     }
 }

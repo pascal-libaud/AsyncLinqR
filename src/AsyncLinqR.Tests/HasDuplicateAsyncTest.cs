@@ -35,7 +35,7 @@ public class HasDuplicateAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = async () => await SpyAsyncEnumerable.GetValuesAsync().HasDuplicateAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await SpyAsyncEnumerable.GetValuesAsync().HasDuplicateAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

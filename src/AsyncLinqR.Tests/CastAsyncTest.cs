@@ -46,8 +46,8 @@ public class CastAsyncTest
         await token.CancelAsync();
 
         var source = new List<DummyBase> { new Dummy1(), new Dummy1() }.ToAsyncEnumerable();
-        var func = async () => await source.CastAsync<DummyBase, Dummy1>(token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.CastAsync<DummyBase, Dummy1>(token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class CastAsyncTest
         await token.CancelAsync();
 
         var source = new List<DummyBase> { new Dummy1(), new Dummy1() }.ToAsyncEnumerable();
-        var func = async () => await source.CastAsync<DummyBase, Dummy1>().ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.CastAsync<DummyBase, Dummy1>().ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

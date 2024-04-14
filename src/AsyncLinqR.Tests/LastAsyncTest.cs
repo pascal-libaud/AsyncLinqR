@@ -16,11 +16,11 @@ public class LastAsyncTest
     [Fact]
     public async Task LastAsync_should_not_throw_when_found_multiple_candidates()
     {
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().LastAsync(x => x == 2);
-        await func.Should().NotThrowAsync();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().LastAsync(x => x == 2);
+        await sut.Should().NotThrowAsync();
 
-        func = () => new List<int> { 1, 2 }.ToAsyncEnumerable().LastAsync();
-        await func.Should().NotThrowAsync();
+        sut = () => new List<int> { 1, 2 }.ToAsyncEnumerable().LastAsync();
+        await sut.Should().NotThrowAsync();
     }
 
     // TODO Voir comment en faire une méthode d'extension
@@ -47,16 +47,16 @@ public class LastAsyncTest
     [Fact]
     public async Task LastAsync_without_predicate_should_throw_exception_when_no_item_found()
     {
-        var func = () => AsyncLinq.EmptyAsync<int>().LastAsync();
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => AsyncLinq.EmptyAsync<int>().LastAsync();
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains no elements");
     }
 
     [Fact]
     public async Task LastAsync_with_predicate_should_throw_exception_when_no_item_found()
     {
-        var func = () => AsyncLinq.RangeNullableAsync(0, 10).LastAsync(x => x == 20);
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => AsyncLinq.RangeNullableAsync(0, 10).LastAsync(x => x == 20);
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains no matching element");
     }
 
@@ -66,7 +66,7 @@ public class LastAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().LastAsync(x => x == 2, token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().LastAsync(x => x == 2, token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

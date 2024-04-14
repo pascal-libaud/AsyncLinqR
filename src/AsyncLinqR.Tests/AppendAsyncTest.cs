@@ -38,8 +38,8 @@ public class AppendAsyncTest
         await token.CancelAsync();
 
         var source = GetValuesAsync();
-        var func = async () => await source.AppendAsync("R", token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.AppendAsync("R", token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -49,7 +49,7 @@ public class AppendAsyncTest
         await token.CancelAsync();
 
         var source = GetValuesAsync();
-        var func = async () => await source.AppendAsync("R").ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.AppendAsync("R").ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

@@ -106,8 +106,8 @@ public class JoinAsyncTest
         var outer = new List<int> { 1, 2 }.ToAsyncEnumerable();
         var inner = new List<int> { 1, 2 }.ToAsyncEnumerable();
 
-        var func = async () => await outer.JoinAsync(inner, x => x, x => x, (x, y) => x + y, token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await outer.JoinAsync(inner, x => x, x => x, (x, y) => x + y, token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
 
@@ -120,8 +120,8 @@ public class JoinAsyncTest
         var outer = new List<int> { 1, 2 }.ToAsyncEnumerable();
         var inner = new List<int> { 1, 2 }.ToAsyncEnumerable();
 
-        var func = async () => await outer.JoinAsync(inner, x => x, x => x, (x, y) => x + y).ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await outer.JoinAsync(inner, x => x, x => x, (x, y) => x + y).ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }
 

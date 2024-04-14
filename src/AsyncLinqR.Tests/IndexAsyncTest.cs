@@ -12,8 +12,8 @@ public class IndexAsyncTest
     [Fact]
     public async Task IndexAsync_should_enumerate_each_item_once()
     {
-        var omIndexAsync = async (IAsyncEnumerable<int> x) => await x.IndexAsync().ToListAsync();
-        await omIndexAsync.Should_enumerate_each_item_once();
+        var sut = async (IAsyncEnumerable<int> x) => await x.IndexAsync().ToListAsync();
+        await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
@@ -43,14 +43,14 @@ public class IndexAsyncTest
     [Fact]
     public async Task IndexAsync_should_throw_when_null_on_enumeration()
     {
-        var func = async () =>
+        var sut = async () =>
         {
             IAsyncEnumerable<int>? enumerable = null;
             await foreach (var _ in enumerable.IndexAsync())
             { }
         };
 
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<NullReferenceException>(sut);
     }
 
     [Fact]
@@ -69,8 +69,8 @@ public class IndexAsyncTest
         await token.CancelAsync();
 
         var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
-        var func = async () => await source.IndexAsync(token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.IndexAsync(token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -80,7 +80,7 @@ public class IndexAsyncTest
         await token.CancelAsync();
 
         var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
-        var func = async () => await source.IndexAsync().ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.IndexAsync().ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

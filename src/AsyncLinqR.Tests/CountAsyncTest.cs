@@ -23,8 +23,8 @@ public class CountAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = async () => await AsyncLinq.RangeAsync(10).CountAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await AsyncLinq.RangeAsync(10).CountAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class CountAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = async () => await GetValues().CountAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await GetValues().CountAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

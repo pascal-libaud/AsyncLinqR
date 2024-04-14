@@ -6,13 +6,13 @@ public class ToListAsyncTest
     [Fact]
     public async Task ToListAsync_should_throw_on_null_enumerable()
     {
-        var func = async () =>
+        var sut = async () =>
         {
             IAsyncEnumerable<int>? enumerable = null;
             return await enumerable.ToListAsync();
         };
 
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<NullReferenceException>(sut);
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class ToListAsyncTest
     [Fact]
     public async Task ToListAsync_should_enumerate_each_item_once()
     {
-        var omToListAsync = async (IAsyncEnumerable<int> x) => await x.ToListAsync();
-        await omToListAsync.Should_enumerate_each_item_once();
+        var sut = async (IAsyncEnumerable<int> x) => await x.ToListAsync();
+        await sut.Should_enumerate_each_item_once();
     }
 }

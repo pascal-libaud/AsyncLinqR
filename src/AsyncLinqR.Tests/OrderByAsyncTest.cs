@@ -55,8 +55,8 @@ public class OrderByAsyncTest
         await token.CancelAsync();
 
         var source = new List<int> { 5, 4, 8, 1 }.ToAsyncEnumerable();
-        var func = async () => await source.OrderByAsync(x => x, token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.OrderByAsync(x => x, token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -66,8 +66,8 @@ public class OrderByAsyncTest
         await token.CancelAsync();
 
         var source = new List<int> { 5, 4, 8, 1 }.ToAsyncEnumerable();
-        var func = async () => await source.OrderByAsync(x => x).ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.OrderByAsync(x => x).ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -82,8 +82,8 @@ public class OrderByAsyncTest
         Person t4 = new("Toto", 9);
         var source = new List<Person> { t1, t2, t3, t4 }.ToAsyncEnumerable();
 
-        var func = async () => await source.OrderByAsync(x => x.Name).ThenByAsync(x => x.Age, token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.OrderByAsync(x => x.Name).ThenByAsync(x => x.Age, token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -98,8 +98,8 @@ public class OrderByAsyncTest
         Person t4 = new("Toto", 9);
         var source = new List<Person> { t1, t2, t3, t4 }.ToAsyncEnumerable();
 
-        var func = async () => await source.OrderByAsync(x => x.Name).ThenByAsync(x => x.Age).ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.OrderByAsync(x => x.Name).ThenByAsync(x => x.Age).ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     // TODO

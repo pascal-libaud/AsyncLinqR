@@ -12,12 +12,12 @@ public class SingleOrDefaultAsyncTest
     [Fact]
     public async Task SingleOrDefaultAsync_should_throw_when_found_multiple_candidates()
     {
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleOrDefaultAsync(x => x == 2);
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleOrDefaultAsync(x => x == 2);
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains more than one matching element");
 
-        func = () => new List<int> { 1, 2 }.ToAsyncEnumerable().SingleOrDefaultAsync();
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        sut = () => new List<int> { 1, 2 }.ToAsyncEnumerable().SingleOrDefaultAsync();
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains more than one element");
     }
 
@@ -55,15 +55,15 @@ public class SingleOrDefaultAsyncTest
     [Fact]
     public async Task SingleOrDefaultAsync_without_predicate_should_not_throw_when_no_item_found()
     {
-        var func = () => AsyncLinq.EmptyAsync<int?>().SingleOrDefaultAsync();
-        await func.Should().NotThrowAsync();
+        var sut = () => AsyncLinq.EmptyAsync<int?>().SingleOrDefaultAsync();
+        await sut.Should().NotThrowAsync();
     }
 
     [Fact]
     public async Task SingleOrDefaultAsync_with_predicate_should_not_throw_when_no_item_found()
     {
-        var func = () => AsyncLinq.RangeNullableAsync(0, 10).SingleOrDefaultAsync(x => x == 20);
-        await func.Should().NotThrowAsync();
+        var sut = () => AsyncLinq.RangeNullableAsync(0, 10).SingleOrDefaultAsync(x => x == 20);
+        await sut.Should().NotThrowAsync();
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class SingleOrDefaultAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleOrDefaultAsync(x => x == 2, token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleOrDefaultAsync(x => x == 2, token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

@@ -16,40 +16,40 @@ public class FirstAsyncTest
     [Fact]
     public async Task FirstAsync_should_not_throw_when_found_multiple_candidates()
     {
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstAsync(x => x == 2);
-        await func.Should().NotThrowAsync();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstAsync(x => x == 2);
+        await sut.Should().NotThrowAsync();
 
-        func = () => new List<int> { 1, 2 }.ToAsyncEnumerable().FirstAsync();
-        await func.Should().NotThrowAsync();
+        sut = () => new List<int> { 1, 2 }.ToAsyncEnumerable().FirstAsync();
+        await sut.Should().NotThrowAsync();
     }
 
     [Fact]
     public async Task FirstAsync_without_predicate_should_not_enumerate_all()
     {
-        var omFirstAsync = (IAsyncEnumerable<int> x) => x.FirstAsync();
-        await omFirstAsync.Should_not_enumerate_all_when();
+        var sut = (IAsyncEnumerable<int> x) => x.FirstAsync();
+        await sut.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task FirstAsync_with_predicate_should_not_enumerate_all_when_item_found()
     {
-        var omFirstAsync = (IAsyncEnumerable<int> x) => x.FirstAsync(z => z == 5);
-        await omFirstAsync.Should_not_enumerate_all_when();
+        var sut = (IAsyncEnumerable<int> x) => x.FirstAsync(z => z == 5);
+        await sut.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task FirstAsync_without_predicate_should_throw_exception_when_no_item_found()
     {
-        var func = () => AsyncLinq.EmptyAsync<int>().FirstAsync();
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => AsyncLinq.EmptyAsync<int>().FirstAsync();
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains no elements");
     }
 
     [Fact]
     public async Task FirstAsync_with_predicate_should_throw_exception_when_no_item_found()
     {
-        var func = () => AsyncLinq.RangeNullableAsync(0, 10).FirstAsync(x => x == 20);
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => AsyncLinq.RangeNullableAsync(0, 10).FirstAsync(x => x == 20);
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains no matching element");
     }
 
@@ -59,7 +59,7 @@ public class FirstAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstAsync(x => x == 2, token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstAsync(x => x == 2, token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

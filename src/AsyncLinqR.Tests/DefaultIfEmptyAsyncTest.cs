@@ -23,8 +23,8 @@ public class DefaultIfEmptyAsyncTest
     public async Task DefaultIfEmptyAsync_should_throw_exception_when_source_null()
     {
         IAsyncEnumerable<int>? source = null;
-        var func = async () => await source.DefaultIfEmptyAsync().ToListAsync();
-        (await func.Should().ThrowAsync<ArgumentNullException>()).And.Message.Should().Be("Value cannot be null. (Parameter 'source')");
+        var sut = async () => await source.DefaultIfEmptyAsync().ToListAsync();
+        (await sut.Should().ThrowAsync<ArgumentNullException>()).And.Message.Should().Be("Value cannot be null. (Parameter 'source')");
     }
 
     [Fact]
@@ -48,25 +48,25 @@ public class DefaultIfEmptyAsyncTest
         await sut.Should_not_enumerate_early();
     }
 
-        [Fact]
-    public async Task OmDistinctAsync_should_pass_cancellation_token()
+    [Fact]
+    public async Task DefaultIsEmptyAsync_should_pass_cancellation_token()
     {
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
         var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
-        var func = async () => await source.DefaultIfEmptyAsync(token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.DefaultIfEmptyAsync(token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
-    [Fact] 
-    public async Task OmDistinctAsync_should_receive_and_pass_cancellation_token()
+
+    [Fact]
+    public async Task DefaultIsEmptyAsync_should_receive_and_pass_cancellation_token()
     {
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
         var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
-        var func = async () => await source.DefaultIfEmptyAsync().ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.DefaultIfEmptyAsync().ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
-
 }

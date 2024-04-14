@@ -24,8 +24,8 @@ public class AllAsyncTest
     [Fact]
     public async Task AllAsync_should_not_enumerate_all_when_one_false()
     {
-        var omAll = async (IAsyncEnumerable<int> x) => await x.AllAsync(z => z < 8);
-        await omAll.Should_not_enumerate_all_when();
+        var sut = async (IAsyncEnumerable<int> x) => await x.AllAsync(z => z < 8);
+        await sut.Should_not_enumerate_all_when();
     }
 
     [Fact]
@@ -34,8 +34,8 @@ public class AllAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = async () => await AsyncLinq.RangeAsync(10).AllAsync(x => x == 4, token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await AsyncLinq.RangeAsync(10).AllAsync(x => x == 4, token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     } 
     
     [Fact]
@@ -44,8 +44,8 @@ public class AllAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = async () => await AsyncLinq.RangeAsync(10).AllAsync(x =>  (x == 4).ToTask(), token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await AsyncLinq.RangeAsync(10).AllAsync(x =>  (x == 4).ToTask(), token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public class AllAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = async () => await RangeHelper.Range(10).AllAsync(x => (x == 4).ToTask(), token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await RangeHelper.Range(10).AllAsync(x => (x == 4).ToTask(), token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

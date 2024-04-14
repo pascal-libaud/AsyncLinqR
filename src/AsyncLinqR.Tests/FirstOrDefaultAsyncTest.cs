@@ -12,11 +12,11 @@ public class FirstOrDefaultAsyncTest
     [Fact]
     public async Task FirstOrDefaultAsync_should_not_throw_when_found_multiple_candidates()
     {
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstOrDefaultAsync(x => x == 2);
-        await func.Should().NotThrowAsync();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstOrDefaultAsync(x => x == 2);
+        await sut.Should().NotThrowAsync();
 
-        func = () => new List<int> { 1, 2 }.ToAsyncEnumerable().FirstOrDefaultAsync();
-        await func.Should().NotThrowAsync();
+        sut = () => new List<int> { 1, 2 }.ToAsyncEnumerable().FirstOrDefaultAsync();
+        await sut.Should().NotThrowAsync();
     }
 
     [Fact]
@@ -57,15 +57,15 @@ public class FirstOrDefaultAsyncTest
     [Fact]
     public async Task FirstOrDefaultAsync_without_predicate_should_not_throw_when_no_item_found()
     {
-        var func = () => AsyncLinq.EmptyAsync<int?>().FirstOrDefaultAsync();
-        await func.Should().NotThrowAsync();
+        var sut = () => AsyncLinq.EmptyAsync<int?>().FirstOrDefaultAsync();
+        await sut.Should().NotThrowAsync();
     }
 
     [Fact]
     public async Task FirstOrDefaultAsync_with_predicate_should_not_throw_when_no_item_found()
     {
-        var func = () => AsyncLinq.RangeAsync(0, 10).FirstOrDefaultAsync(x => x == 20);
-        await func.Should().NotThrowAsync();
+        var sut = () => AsyncLinq.RangeAsync(0, 10).FirstOrDefaultAsync(x => x == 20);
+        await sut.Should().NotThrowAsync();
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class FirstOrDefaultAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstOrDefaultAsync(x => x == 2, token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().FirstOrDefaultAsync(x => x == 2, token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

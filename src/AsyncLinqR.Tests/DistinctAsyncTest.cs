@@ -33,8 +33,8 @@ public class DistinctAsyncTest
         await token.CancelAsync();
 
         var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
-        var func = async () => await source.DistinctAsync(token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.DistinctAsync(token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact] 
@@ -44,7 +44,7 @@ public class DistinctAsyncTest
         await token.CancelAsync();
 
         var source = new List<int> { 0, 0, 1, 1, 2, 2, 3, 3 }.ToAsyncEnumerable();
-        var func = async () => await source.DistinctAsync().ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.DistinctAsync().ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

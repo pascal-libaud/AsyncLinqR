@@ -37,8 +37,8 @@ public class PrependAsyncTest
         await token.CancelAsync();
 
         var source = GetValuesAsync();
-        var func = async () => await source.PrependAsync("o", token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.PrependAsync("o", token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public class PrependAsyncTest
         await token.CancelAsync();
 
         var source = GetValuesAsync();
-        var func = async () => await source.PrependAsync("O").ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.PrependAsync("O").ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }

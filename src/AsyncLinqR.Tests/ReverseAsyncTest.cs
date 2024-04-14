@@ -17,8 +17,8 @@ public class ReverseAsyncTest
         await token.CancelAsync();
 
         var source = RangeHelper.Alphabet().ToAsyncEnumerable();
-        var func = async () => await source.ReverseAsync(token.Token).ToListAsync();
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.ReverseAsync(token.Token).ToListAsync();
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
     [Fact] 
     public async Task DistinctAsync_should_receive_and_pass_cancellation_token()
@@ -27,8 +27,8 @@ public class ReverseAsyncTest
         await token.CancelAsync();
 
         var source = RangeHelper.Alphabet().ToAsyncEnumerable();
-        var func = async () => await source.ReverseAsync().ToListAsync(token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = async () => await source.ReverseAsync().ToListAsync(token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
 }

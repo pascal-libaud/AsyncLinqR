@@ -12,12 +12,12 @@ public class SingleAsyncTest
     [Fact]
     public async Task SingleAsync_should_throw_when_found_multiple_candidates()
     {
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleAsync(x => x == 2);
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleAsync(x => x == 2);
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains more than one matching element");
 
-        func = () => new List<int> { 1, 2 }.ToAsyncEnumerable().SingleAsync();
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        sut = () => new List<int> { 1, 2 }.ToAsyncEnumerable().SingleAsync();
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains more than one element");
     }
 
@@ -34,16 +34,16 @@ public class SingleAsyncTest
     [Fact]
     public async Task SingleAsync_without_predicate_should_throw_exception_when_no_item_found()
     {
-        var func = () => AsyncLinq.EmptyAsync<int>().SingleAsync();
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => AsyncLinq.EmptyAsync<int>().SingleAsync();
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains no elements");
     }
 
     [Fact]
     public async Task SingleAsync_with_predicate_should_throw_exception_when_no_item_found()
     {
-        var func = () => AsyncLinq.RangeNullableAsync(0, 10).SingleAsync(x => x == 20);
-        (await func.Should().ThrowAsync<InvalidOperationException>())
+        var sut = () => AsyncLinq.RangeNullableAsync(0, 10).SingleAsync(x => x == 20);
+        (await sut.Should().ThrowAsync<InvalidOperationException>())
             .And.Message.Should().Be("Sequence contains no matching element");
     }
 
@@ -53,7 +53,7 @@ public class SingleAsyncTest
         var token = new CancellationTokenSource();
         await token.CancelAsync();
 
-        var func = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleAsync(x => x == 2, token.Token);
-        await func.Should().ThrowAsync<OperationCanceledException>();
+        var sut = () => new List<int> { 0, 1, 2, 2, 3 }.ToAsyncEnumerable().SingleAsync(x => x == 2, token.Token);
+        await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }
