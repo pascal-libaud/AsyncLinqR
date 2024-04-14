@@ -2,6 +2,7 @@
 
 // AggregateAsync
 // SelectManyAsync
+// GroupByAsync
 
 // ConcatAsync
 

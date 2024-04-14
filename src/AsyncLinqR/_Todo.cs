@@ -2,7 +2,6 @@
 
 // JoinAsync, CrossJoinAsync
 // Union, Intersect, Except
-// GroupByAsync
 // ZipAsync
 // RepeatAsync
 

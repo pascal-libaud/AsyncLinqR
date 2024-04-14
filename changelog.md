@@ -8,6 +8,7 @@ Initial version.
 
  - Add new methods:
 	 - Add DefaultIfEmptyAsync
+	 - Add GroupByAsync
 	 - Add IndexAsync
 	 - Add JoinAsync
 	 - Add OrderAsync
