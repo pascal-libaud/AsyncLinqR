@@ -24,7 +24,7 @@ public static partial class AsyncLinq
         }
     }
 
-    // ----
+    // ----------------------------------- //
 
     public static IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, CancellationToken cancellationToken = default)
     {
@@ -107,7 +107,7 @@ public static partial class AsyncLinq
         }
     }
 
-    // ----
+    // ----------------------------------- //
 
     public static IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, CancellationToken cancellationToken = default)
     {
@@ -191,7 +191,7 @@ public static partial class AsyncLinq
         }
     }
 
-    // ----
+    // ----------------------------------- //
 
     public static IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, CancellationToken cancellationToken = default)
     {
@@ -275,7 +275,7 @@ public static partial class AsyncLinq
         }
     }
 
-    // ----
+    // ----------------------------------- //
 
     public static IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, CancellationToken cancellationToken = default)
     {
@@ -359,7 +359,7 @@ public static partial class AsyncLinq
         }
     }
 
-    // ----
+    // ----------------------------------- //
 
     public static IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, CancellationToken cancellationToken = default)
     {
@@ -443,7 +443,7 @@ public static partial class AsyncLinq
         }
     }
 
-    // ----
+    // ----------------------------------- //
 
     public static IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, CancellationToken cancellationToken = default)
     {

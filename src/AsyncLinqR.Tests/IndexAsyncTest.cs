@@ -1,3 +1,4 @@
+#pragma warning disable CS8604 // Existence possible d'un argument de référence null.
 namespace AsyncLinqR.Tests;
 
 public class IndexAsyncTest

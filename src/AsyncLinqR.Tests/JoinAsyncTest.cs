@@ -110,7 +110,6 @@ public class JoinAsyncTest
         await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 
-
     [Fact]
     public async Task JoinAsync_should_receive_and_pass_cancellation_token_on_outer_enumerable()
     {
