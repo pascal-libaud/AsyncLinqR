@@ -8,6 +8,7 @@ Initial version.
 
  - Add new methods:
 	 - Add DefaultIfEmptyAsync
+	 - Add ExceptByAsync
 	 - Add ForEachAsync
 	 - Add GroupByAsync
 	 - Add IndexAsync
