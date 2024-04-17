@@ -11,6 +11,8 @@ Initial version.
 	 - Add ForEachAsync
 	 - Add GroupByAsync
 	 - Add IndexAsync
+	 - Add IntersectAsync
+	 - Add IntersectByAsync
 	 - Add JoinAsync
 	 - Add OrderAsync
 	 - Add SkipAsync
