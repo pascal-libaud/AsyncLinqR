@@ -3,7 +3,7 @@ namespace AsyncLinqR.Tests;
 public class UnionAsyncTest
 {
     [Fact]
-    public async Task Union_should_work_as_expected_1()
+    public async Task UnionAsync_should_work_as_expected_1()
     {
         var list1 = new List<Dummy> { new(1), new(2), new(3), }.ToAsyncEnumerable();
         var list2 = new List<Dummy> { new(2), new(3), new(4), }.ToAsyncEnumerable();
@@ -15,7 +15,7 @@ public class UnionAsyncTest
     }
 
     [Fact]
-    public async Task Union_should_work_as_expected_3()
+    public async Task UnionAsync_should_work_as_expected_2()
     {
         var list1 = new List<Dummy> { new(1), new(2), new(1), new(2), }.ToAsyncEnumerable();
         var list2 = new List<Dummy> { new(2), new(2), new(2), }.ToAsyncEnumerable();
@@ -55,14 +55,14 @@ public class UnionAsyncTest
     }
 
     [Fact]
-    public async Task Union_should_not_enumerable_all_when_break_on_first_enumerable()
+    public async Task UnionAsync_should_not_enumerable_all_when_break_on_first_enumerable()
     {
         var unionAsync = (IAsyncEnumerable<int> x) => x.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).TakeAsync(2).ToListAsync();
         await unionAsync.Should_not_enumerate_all_when();
     }
 
     [Fact]
-    public async Task Union_should_not_enumerable_all_when_break_on_second_enumerable()
+    public async Task UnionAsync_should_not_enumerable_all_when_break_on_second_enumerable()
     {
         var unionAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(x).TakeAsync(1).ToListAsync();
         await unionAsync.Should_not_enumerate_all_when();
