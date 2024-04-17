@@ -1,7 +1,7 @@
 ﻿// TODO : Créer les méthodes ci-dessous
 
 // CrossJoinAsync
-// Union, Intersect, Except
+// Intersect, Except
 // ZipAsync
 // RepeatAsync
 

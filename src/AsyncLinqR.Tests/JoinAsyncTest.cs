@@ -83,7 +83,7 @@ public class JoinAsyncTest
     }
 
     [Fact]
-    public async Task Join_should_not_enumerable_all_when_break_on_outer_enumerable()
+    public async Task JoinAsync_should_not_enumerable_all_when_break_on_outer_enumerable()
     {
         var joinAsync = (IAsyncEnumerable<int> x) => x.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), y => y, y => y, (y, z) => y + z).TakeAsync(2).ToListAsync();
         await joinAsync.Should_not_enumerate_all_when();
@@ -91,7 +91,7 @@ public class JoinAsyncTest
 
     // Trop lourd à mettre en place et Linq ne le gère pas non plus
     //[Fact]
-    public async Task Join_should_not_enumerable_all_when_break_on_inner_enumerable()
+    public async Task JoinAsync_should_not_enumerable_all_when_break_on_inner_enumerable()
     {
         var joinAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(x, y => y, y => y, (y, z) => y + z).TakeAsync(1).ToListAsync();
         await joinAsync.Should_not_enumerate_all_when();
@@ -111,7 +111,7 @@ public class JoinAsyncTest
     }
 
     [Fact]
-    public async Task JoinAsync_should_receive_and_pass_cancellation_token_on_outer_enumerable()
+    public async Task JoinAsync_should_receive_and_pass_cancellation_token()
     {
         var token = new CancellationTokenSource();
         await token.CancelAsync();

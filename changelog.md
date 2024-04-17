@@ -20,6 +20,8 @@ Initial version.
 	 - Add TakeWhileAsync
 	 - Add ToDictionaryAsync
 	 - Add ToHashSetAsync
+	 - Add UnionAsync
+	 - Add UnionByAsync
  - Add indexes on SelectAsync
  - Add CancellationToken support on:
 	 - DistinctByAsync
