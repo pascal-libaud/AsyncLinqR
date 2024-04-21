@@ -25,6 +25,8 @@ Initial version.
 	 - Add ToHashSetAsync
 	 - Add UnionAsync
 	 - Add UnionByAsync
+	 - Add ZipAsync
+	 - Add ZipFullAsync (which has no equivalent in Linq)
  - Add indexes on SelectAsync
  - Add CancellationToken support on:
 	 - DistinctByAsync
