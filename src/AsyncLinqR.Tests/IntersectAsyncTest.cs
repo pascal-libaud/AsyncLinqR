@@ -29,35 +29,35 @@ public class IntersectAsyncTest
     [Fact]
     public async Task IntersectAsync_should_not_enumerate_early_on_first_enumerable()
     {
-        var intersectAsync = (IAsyncEnumerable<int> x) => x.IntersectAsync(new List<int> { 1, 2 }.ToAsyncEnumerable());
+        var intersectAsync = (IAsyncEnumerable<int> first) => first.IntersectAsync(new List<int> { 1, 2 }.ToAsyncEnumerable());
         await intersectAsync.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task IntersectAsync_should_not_enumerate_early_on_second_enumerable()
     {
-        var intersectAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().IntersectAsync(x);
+        var intersectAsync = (IAsyncEnumerable<int> second) => new List<int> { 1, 2 }.ToAsyncEnumerable().IntersectAsync(second);
         await intersectAsync.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task IntersectAsync_should_enumerate_each_ite_once_on_first_enumerable()
     {
-        var intersectAsync = (IAsyncEnumerable<int> x) => x.IntersectAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).ToListAsync();
+        var intersectAsync = (IAsyncEnumerable<int> first) => first.IntersectAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).ToListAsync();
         await intersectAsync.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task IntersectAsync_should_enumerate_each_ite_once_on_second_enumerable()
     {
-        var intersectAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().IntersectAsync(x).ToListAsync();
+        var intersectAsync = (IAsyncEnumerable<int> second) => new List<int> { 1, 2 }.ToAsyncEnumerable().IntersectAsync(second).ToListAsync();
         await intersectAsync.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task IntersectAsync_should_not_enumerable_all_when_break_on_first_enumerable()
     {
-        var intersectAsync = (IAsyncEnumerable<int> x) => x.IntersectAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).TakeAsync(2).ToListAsync();
+        var intersectAsync = (IAsyncEnumerable<int> first) => first.IntersectAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).TakeAsync(2).ToListAsync();
         await intersectAsync.Should_not_enumerate_all_when();
     }
 
@@ -87,5 +87,3 @@ public class IntersectAsyncTest
         await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }
-
-file record Dummy(int Value);

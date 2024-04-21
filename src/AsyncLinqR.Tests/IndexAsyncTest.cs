@@ -6,14 +6,14 @@ public class IndexAsyncTest
     [Fact]
     public async Task IndexAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.IndexAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.IndexAsync();
         await sut.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task IndexAsync_should_enumerate_each_item_once()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.IndexAsync().ToListAsync();
+        var sut = (IAsyncEnumerable<int> x) => x.IndexAsync().ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 

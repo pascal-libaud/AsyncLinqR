@@ -24,11 +24,8 @@ public class SingleOrDefaultAsyncTest
     [Fact]
     public async Task SingleOrDefaultAsync_enumerate_all_when_first_demanded()
     {
-        var spy = SpyAsyncEnumerable.GetValuesAsync();
-
-        _ = await spy.SingleOrDefaultAsync(x => x == 0);
-
-        Assert.True(spy.IsEndReached);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.SingleOrDefaultAsync(x => x == 0);
+        await sut.Enumerate_all_when();
     }
 
     [Fact]

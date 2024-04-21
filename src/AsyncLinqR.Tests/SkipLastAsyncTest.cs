@@ -30,14 +30,14 @@ public class SkipLastAsyncTest
     [Fact]
     public async Task SkipLastAsync_should_enumerate_each_item_once()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.SkipLastAsync(1).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.SkipLastAsync(1).ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task SkipLastAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.SkipLastAsync(1);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.SkipLastAsync(1);
         await sut.Should_not_enumerate_early();
     }
 

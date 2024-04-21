@@ -19,7 +19,7 @@ public class SelectAsyncTest
     [Fact]
     public async Task SelectAsync_should_enumerate_each_item_once()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.SelectAsync(z => z.ToString().ToTask()).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.SelectAsync(x => x.ToString().ToTask()).ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 

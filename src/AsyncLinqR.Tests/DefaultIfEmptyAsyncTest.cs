@@ -30,21 +30,21 @@ public class DefaultIfEmptyAsyncTest
     [Fact]
     public async Task DefaultIfEmptyAsync_should_enumerate_each_item_once()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.DefaultIfEmptyAsync().ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.DefaultIfEmptyAsync().ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
-    public async Task DefaultIfEmptyAsync_should_enumerate_all_when_break()
+    public async Task DefaultIfEmptyAsync_should_not_enumerate_all_when_break()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.DefaultIfEmptyAsync().TakeAsync(2).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.DefaultIfEmptyAsync().TakeAsync(2).ToListAsync();
         await sut.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task DefaultIfEmptyAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.DefaultIfEmptyAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.DefaultIfEmptyAsync();
         await sut.Should_not_enumerate_early();
     }
 

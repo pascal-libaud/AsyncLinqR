@@ -24,7 +24,7 @@ public class AllAsyncTest
     [Fact]
     public async Task AllAsync_should_not_enumerate_all_when_one_false()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.AllAsync(z => z < 8);
+        var sut = async (IAsyncEnumerable<int> enumerable) => await enumerable.AllAsync(x => x < 8);
         await sut.Should_not_enumerate_all_when();
     }
 

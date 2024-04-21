@@ -17,21 +17,21 @@ public class TakeWhileAsyncTest
     [Fact]
     public async Task TakeWhileAsync_should_enumerate_each_item_once()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.TakeWhileAsync(_ => true).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.TakeWhileAsync(_ => true).ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task TakeWhileAsync_should_not_enumerate_all_when_found_predicate_true()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.TakeWhileAsync(x => x != 2).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.TakeWhileAsync(x => x != 2).ToListAsync();
         await sut.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task TakeWhileAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.TakeWhileAsync(_ => true);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.TakeWhileAsync(_ => true);
         await sut.Should_not_enumerate_early();
     }
 

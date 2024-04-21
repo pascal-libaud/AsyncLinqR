@@ -23,25 +23,18 @@ public class LastAsyncTest
         await sut.Should().NotThrowAsync();
     }
 
-    // TODO Voir comment en faire une méthode d'extension
     [Fact]
-    public async Task LastAsync_without_predicate_enumerate_all_when_first_demanded()
+    public async Task LastAsync_without_predicate_enumerate_all_when_last_demanded()
     {
-        var spy = SpyAsyncEnumerable.GetValuesAsync();
-
-        _ = await spy.LastAsync();
-
-        Assert.True(spy.IsEndReached);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.LastAsync();
+        await sut.Enumerate_all_when();
     }
 
     [Fact]
-    public async Task LastAsync_with_predicate_enumerate_all_when_first_demanded()
+    public async Task LastAsync_with_predicate_enumerate_all_when_last_demanded()
     {
-        var spy = SpyAsyncEnumerable.GetValuesAsync();
-        
-        _ = await spy.LastAsync(x => x == 5);
-
-        Assert.True(spy.IsEndReached);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.LastAsync(x => x == 5);
+        await sut.Enumerate_all_when();
     }
 
     [Fact]

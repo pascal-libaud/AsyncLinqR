@@ -26,14 +26,14 @@ public class FirstAsyncTest
     [Fact]
     public async Task FirstAsync_without_predicate_should_not_enumerate_all()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.FirstAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.FirstAsync();
         await sut.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task FirstAsync_with_predicate_should_not_enumerate_all_when_item_found()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.FirstAsync(z => z == 5);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.FirstAsync(x => x == 5);
         await sut.Should_not_enumerate_all_when();
     }
 

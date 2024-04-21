@@ -17,7 +17,7 @@ public class HasDuplicateAsyncTest
     [Fact]
     public async Task HasDuplicateAsync_should_enumerate_each_item_once()
     {
-        var hasDuplicateAsync = (IAsyncEnumerable<int> x) => x.HasDuplicateAsync();
+        var hasDuplicateAsync = (IAsyncEnumerable<int> enumerable) => enumerable.HasDuplicateAsync();
         await hasDuplicateAsync.Should_enumerate_each_item_once();
     }
 
@@ -25,7 +25,7 @@ public class HasDuplicateAsyncTest
     public async Task HasDuplicateAsync_should_not_enumerate_all_when_found_duplicate()
     {
         var spy = new SpyAsyncEnumerable<int>(new List<int> { 0, 1, 2, 2, 3, 4 }.ToAsyncEnumerable());
-        var hasDuplicateAsync = (IAsyncEnumerable<int> x) => x.HasDuplicateAsync();
+        var hasDuplicateAsync = (IAsyncEnumerable<int> enumerable) => enumerable.HasDuplicateAsync();
         await hasDuplicateAsync.Should_enumerate_each_item_once(spy);
     }
 

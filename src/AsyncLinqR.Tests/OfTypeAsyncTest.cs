@@ -14,21 +14,21 @@ public class OfTypeAsyncTest
     [Fact]
     public async Task OfTypeAsync_should_enumerate_each_item_once()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.OfTypeAsync<int, int>().ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.OfTypeAsync<int, int>().ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task OfTypeAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.OfTypeAsync<int, int>();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.OfTypeAsync<int, int>();
         await sut.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task OfTypeAsync_should_not_enumerate_all_when_not_demanded()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.OfTypeAsync<int, int>().TakeAsync(2).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.OfTypeAsync<int, int>().TakeAsync(2).ToListAsync();
         await sut.Should_not_enumerate_all_when();
     }
 

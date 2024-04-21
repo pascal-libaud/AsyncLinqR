@@ -17,14 +17,14 @@ public class SkipWhileAsyncTest
     [Fact]
     public async Task SkipWhileAsync_should_enumerate_each_item_once()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.SkipWhileAsync(_ => false).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.SkipWhileAsync(_ => false).ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task SkipWhileAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.SkipWhileAsync(_ => false);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.SkipWhileAsync(_ => false);
         await sut.Should_not_enumerate_early();
     }
 

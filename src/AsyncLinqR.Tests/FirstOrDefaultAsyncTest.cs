@@ -22,14 +22,14 @@ public class FirstOrDefaultAsyncTest
     [Fact]
     public async Task FirstOrDefaultAsync_without_predicate_should_not_enumerate_all()
     {
-        var firstOrDefaultAsync = (IAsyncEnumerable<int> x) => x.FirstOrDefaultAsync();
+        var firstOrDefaultAsync = (IAsyncEnumerable<int> enumerable) => enumerable.FirstOrDefaultAsync();
         await firstOrDefaultAsync.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task FirstOrDefaultAsync_with_predicate_should_not_enumerate_all_when_item_found()
     {
-        var firstOrDefaultAsync = (IAsyncEnumerable<int> x) => x.FirstOrDefaultAsync(z => z == 5);
+        var firstOrDefaultAsync = (IAsyncEnumerable<int> enumerable) => enumerable.FirstOrDefaultAsync(x => x == 5);
         await firstOrDefaultAsync.Should_not_enumerate_all_when();
     }
 

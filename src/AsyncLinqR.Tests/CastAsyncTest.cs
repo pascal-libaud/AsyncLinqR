@@ -21,21 +21,21 @@ public class CastAsyncTest
     [Fact]
     public async Task CastAsync_should_enumerate_each_item_once()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.CastAsync<int, int>().ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.CastAsync<int, int>().ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task CastAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.CastAsync<int, int>();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.CastAsync<int, int>();
         await sut.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task CastAsync_should_not_enumerate_all_when_not_demanded()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.CastAsync<int, int>().TakeAsync(2).ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.CastAsync<int, int>().TakeAsync(2).ToListAsync();
         await sut.Should_not_enumerate_all_when();
     }
 

@@ -30,7 +30,7 @@ public class ToDictionaryAsyncTest
     [Fact]
     public async Task ToDictionaryAsync_should_enumerate_each_item_once()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.ToDictionaryAsync(y => y);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.ToDictionaryAsync(y => y);
         await sut.Should_enumerate_each_item_once();
     }
 }

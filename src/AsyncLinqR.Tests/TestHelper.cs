@@ -13,7 +13,8 @@ public static class TestHelper
         Assert.True(spy.IsEnumerated);
     }
 
-    public static async Task Should_enumerate_each_item_once<T>(this Func<IAsyncEnumerable<int>, Task<T>> sut, ISpyAsyncEnumerable<int>? spy = null)
+    public static async Task Should_enumerate_each_item_once<T>(this Func<IAsyncEnumerable<int>, Task<T>> sut,
+        ISpyAsyncEnumerable<int>? spy = null)
     {
         spy ??= SpyAsyncEnumerable.GetValuesAsync();
 
@@ -27,5 +28,13 @@ public static class TestHelper
 
         _ = await sut(spy);
         Assert.False(spy.IsEndReached);
+    }
+
+    public static async Task Enumerate_all_when<T>(this Func<IAsyncEnumerable<int>, Task<T>> sut)
+    {
+        var spy = SpyAsyncEnumerable.GetValuesAsync();
+
+        _ = await sut(spy);
+        Assert.True(spy.IsEndReached);
     }
 }

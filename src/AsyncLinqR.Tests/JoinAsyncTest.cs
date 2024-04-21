@@ -57,35 +57,35 @@ public class JoinAsyncTest
     [Fact]
     public async Task JoinAsync_should_not_enumerate_early_on_outer_enumerable()
     {
-        var joinAsync = (IAsyncEnumerable<int> x) => x.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), y => y, y => y, (y, z) => y + z);
+        var joinAsync = (IAsyncEnumerable<int> outer) => outer.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), x => x, x => x, (x, y) => x + y);
         await joinAsync.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task JoinAsync_should_not_enumerate_early_on_inner_enumerable()
     {
-        var joinAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(x, y => y, y => y, (y, z) => y + z);
+        var joinAsync = (IAsyncEnumerable<int> inner) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(inner, x => x, x => x, (x, y) => x + y);
         await joinAsync.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task JoinAsync_should_enumerate_each_ite_once_on_outer_enumerable()
     {
-        var joinAsync = (IAsyncEnumerable<int> x) => x.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), y => y, y => y, (y, z) => y + z).ToListAsync();
+        var joinAsync = (IAsyncEnumerable<int> outer) => outer.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), x => x, x => x, (x, y) => x + y).ToListAsync();
         await joinAsync.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task JoinAsync_should_enumerate_each_ite_once_on_inner_enumerable()
     {
-        var joinAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(x, y => y, y => y, (y, z) => y + z).ToListAsync();
+        var joinAsync = (IAsyncEnumerable<int> inner) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(inner, x => x, x => x, (x, y) => x + y).ToListAsync();
         await joinAsync.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task JoinAsync_should_not_enumerable_all_when_break_on_outer_enumerable()
     {
-        var joinAsync = (IAsyncEnumerable<int> x) => x.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), y => y, y => y, (y, z) => y + z).TakeAsync(2).ToListAsync();
+        var joinAsync = (IAsyncEnumerable<int> inner) => inner.JoinAsync(new List<int> { 1, 2 }.ToAsyncEnumerable(), x => x, x => x, (x, y) => x + y).TakeAsync(2).ToListAsync();
         await joinAsync.Should_not_enumerate_all_when();
     }
 
@@ -93,7 +93,7 @@ public class JoinAsyncTest
     //[Fact]
     public async Task JoinAsync_should_not_enumerable_all_when_break_on_inner_enumerable()
     {
-        var joinAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(x, y => y, y => y, (y, z) => y + z).TakeAsync(1).ToListAsync();
+        var joinAsync = (IAsyncEnumerable<int> outer) => new List<int> { 1, 2 }.ToAsyncEnumerable().JoinAsync(outer, x => x, x => x, (x, y) => x + y).TakeAsync(1).ToListAsync();
         await joinAsync.Should_not_enumerate_all_when();
     }
 

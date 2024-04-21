@@ -27,7 +27,7 @@ public class ToListAsyncTest
     [Fact]
     public async Task ToListAsync_should_enumerate_each_item_once()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.ToListAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.ToListAsync();
         await sut.Should_enumerate_each_item_once();
     }
 }

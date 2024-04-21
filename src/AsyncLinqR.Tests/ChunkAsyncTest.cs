@@ -30,7 +30,7 @@ public class ChunkAsyncTest
     [Fact]
     public async Task ChunkAsync_should_not_enumerate_early()
     {
-        var sut = (IAsyncEnumerable<int> x) => x.ChunkAsync(3);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.ChunkAsync(3);
         await sut.Should_not_enumerate_early();
     }
 

@@ -24,21 +24,15 @@ public class LastOrDefaultAsyncTest
     [Fact]
     public async Task LastOrDefaultAsync_without_predicate_enumerate_all_when_first_demanded()
     {
-        var spy = SpyAsyncEnumerable.GetValuesAsync();
-
-        _ = await spy.LastOrDefaultAsync();
-
-        Assert.True(spy.IsEndReached);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.LastOrDefaultAsync();
+        await sut.Enumerate_all_when();
     }
 
     [Fact]
     public async Task LastOrDefaultAsync_with_predicate_enumerate_all_when_first_demanded()
     {
-        var spy = SpyAsyncEnumerable.GetValuesAsync();
-
-        _ = await spy.LastOrDefaultAsync(x => x == 5);
-
-        Assert.True(spy.IsEndReached);
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.LastOrDefaultAsync(x => x == 5);
+        await sut.Enumerate_all_when();
     }
 
     [Fact]

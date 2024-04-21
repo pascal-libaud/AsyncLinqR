@@ -29,42 +29,42 @@ public class UnionAsyncTest
     [Fact]
     public async Task UnionAsync_should_not_enumerate_early_on_first_enumerable()
     {
-        var unionAsync = (IAsyncEnumerable<int> x) => x.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable());
+        var unionAsync = (IAsyncEnumerable<int> first) => first.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable());
         await unionAsync.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task UnionAsync_should_not_enumerate_early_on_second_enumerable()
     {
-        var unionAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(x);
+        var unionAsync = (IAsyncEnumerable<int> second) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(second);
         await unionAsync.Should_not_enumerate_early();
     }
 
     [Fact]
     public async Task UnionAsync_should_enumerate_each_ite_once_on_first_enumerable()
     {
-        var unionAsync = (IAsyncEnumerable<int> x) => x.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).ToListAsync();
+        var unionAsync = (IAsyncEnumerable<int> first) => first.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).ToListAsync();
         await unionAsync.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task UnionAsync_should_enumerate_each_ite_once_on_second_enumerable()
     {
-        var unionAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(x).ToListAsync();
+        var unionAsync = (IAsyncEnumerable<int> second) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(second).ToListAsync();
         await unionAsync.Should_enumerate_each_item_once();
     }
 
     [Fact]
     public async Task UnionAsync_should_not_enumerable_all_when_break_on_first_enumerable()
     {
-        var unionAsync = (IAsyncEnumerable<int> x) => x.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).TakeAsync(2).ToListAsync();
+        var unionAsync = (IAsyncEnumerable<int> first) => first.UnionAsync(new List<int> { 1, 2 }.ToAsyncEnumerable()).TakeAsync(2).ToListAsync();
         await unionAsync.Should_not_enumerate_all_when();
     }
 
     [Fact]
     public async Task UnionAsync_should_not_enumerable_all_when_break_on_second_enumerable()
     {
-        var unionAsync = (IAsyncEnumerable<int> x) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(x).TakeAsync(1).ToListAsync();
+        var unionAsync = (IAsyncEnumerable<int> second) => new List<int> { 1, 2 }.ToAsyncEnumerable().UnionAsync(second).TakeAsync(1).ToListAsync();
         await unionAsync.Should_not_enumerate_all_when();
     }
 
@@ -94,5 +94,3 @@ public class UnionAsyncTest
         await sut.Should().ThrowAsync<OperationCanceledException>();
     }
 }
-
-file record Dummy(int Value);

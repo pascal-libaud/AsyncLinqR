@@ -34,7 +34,7 @@ public class ToHashSetAsyncTest
     [Fact]
     public async Task ToHashSetAsync_should_enumerate_each_item_once()
     {
-        var sut = async (IAsyncEnumerable<int> x) => await x.ToHashSetAsync();
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.ToHashSetAsync();
         await sut.Should_enumerate_each_item_once();
     }
 }
