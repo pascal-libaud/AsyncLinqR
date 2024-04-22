@@ -17,6 +17,7 @@ Initial version.
 	 - Add IntersectByAsync
 	 - Add JoinAsync
 	 - Add OrderAsync
+	 - Add RepeatAsync
 	 - Add SkipAsync
 	 - Add SkipLastAsync
 	 - Add SkipWhileAsync
