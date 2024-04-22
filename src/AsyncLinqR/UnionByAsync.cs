@@ -2,6 +2,8 @@
 
 public static partial class AsyncLinq
 {
+    // TODO Faire le produit cartésien avec IAsyncEnumerable => IEnumerable et Func de TKey ou Task<TKey>
+
     public static IAsyncEnumerable<TSource> UnionByAsync<TSource, TKey>(this IAsyncEnumerable<TSource> first, IAsyncEnumerable<TSource> second, Func<TSource, TKey> keySelector, CancellationToken cancellationToken = default)
     {
         return first.UnionByAsync(second, keySelector, null, cancellationToken);
