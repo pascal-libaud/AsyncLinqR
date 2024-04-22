@@ -7,6 +7,7 @@ Initial version.
 ## Next
 
  - Add new methods:
+	 - Add CrossJoinAsync (which has no equivalent in Linq)
 	 - Add DefaultIfEmptyAsync
 	 - Add ExceptByAsync
 	 - Add ForEachAsync
