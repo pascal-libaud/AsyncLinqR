@@ -4,7 +4,7 @@
 
 Initial version.
 
-## Next
+## 1.2.0
 
  - Add new methods:
 	 - Add CrossJoinAsync (which has no equivalent in Linq)
