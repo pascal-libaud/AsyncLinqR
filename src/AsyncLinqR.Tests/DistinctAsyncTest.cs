@@ -18,6 +18,13 @@ public class DistinctAsyncTest
     }
 
     [Fact]
+    public async Task DistinctAsync_should_not_enumerate_early()
+    {
+        var sut = (IAsyncEnumerable<int> enumerable) => enumerable.DistinctAsync();
+        await sut.Should_not_enumerate_early();
+    }
+
+    [Fact]
     public async Task DistinctAsync_should_enumerate_each_item_once()
     {
         var spy = GetSpy();
