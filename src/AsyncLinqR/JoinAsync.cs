@@ -12,11 +12,11 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
             if (comparer.Equals(outerKeySelector(o), innerKeySelector(i)))
@@ -42,7 +42,7 @@ public static partial class AsyncLinq
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
                 yield return resultSelector(o, i);
         }
     }
@@ -58,11 +58,11 @@ public static partial class AsyncLinq
         var func = () => innerList ??= inner.ToList();
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
                 yield return resultSelector(o, i);
         }
     }
@@ -75,14 +75,14 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
         foreach (var o in outer)
-        foreach (var i in await func())
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
                 yield return resultSelector(o, i);
         }
     }
@@ -95,14 +95,14 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
                 yield return resultSelector(o, i);
         }
     }
@@ -125,7 +125,7 @@ public static partial class AsyncLinq
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -141,11 +141,11 @@ public static partial class AsyncLinq
         var func = () => innerList ??= inner.ToList();
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -158,15 +158,15 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
         cancellationToken.ThrowIfCancellationRequested();
         foreach (var o in outer)
-        foreach (var i in await func())
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -179,14 +179,14 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -209,7 +209,7 @@ public static partial class AsyncLinq
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -225,11 +225,11 @@ public static partial class AsyncLinq
         var func = () => innerList ??= inner.ToList();
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -242,15 +242,15 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
         cancellationToken.ThrowIfCancellationRequested();
         foreach (var o in outer)
-        foreach (var i in await func())
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -263,14 +263,14 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
                 yield return resultSelector(o, i);
         }
     }
@@ -293,8 +293,8 @@ public static partial class AsyncLinq
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -309,12 +309,12 @@ public static partial class AsyncLinq
         var func = () => innerList ??= inner.ToList();
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -326,16 +326,16 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
         cancellationToken.ThrowIfCancellationRequested();
         foreach (var o in outer)
-        foreach (var i in await func())
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -347,15 +347,15 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), innerKeySelector(i)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -377,8 +377,8 @@ public static partial class AsyncLinq
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -393,12 +393,12 @@ public static partial class AsyncLinq
         var func = () => innerList ??= inner.ToList();
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -410,16 +410,16 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
         cancellationToken.ThrowIfCancellationRequested();
         foreach (var o in outer)
-        foreach (var i in await func())
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -431,15 +431,15 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(outerKeySelector(o), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -461,8 +461,8 @@ public static partial class AsyncLinq
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -477,12 +477,12 @@ public static partial class AsyncLinq
         var func = () => innerList ??= inner.ToList();
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
         foreach (var i in func())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -494,16 +494,16 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
         cancellationToken.ThrowIfCancellationRequested();
         foreach (var o in outer)
-        foreach (var i in await func())
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 
@@ -515,15 +515,15 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> JoinAsync<TOuter, TInner, TKey, TResult>(this IAsyncEnumerable<TOuter> outer, IAsyncEnumerable<TInner> inner, Func<TOuter, Task<TKey>> outerKeySelector, Func<TInner, Task<TKey>> innerKeySelector, Func<TOuter, TInner, Task<TResult>> resultSelector, IEqualityComparer<TKey>? comparer, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         List<TInner>? innerList = null;
-        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken);
+        var func = async () => innerList ??= await inner.ToListAsync(cancellationToken).ConfigureAwait(false);
         comparer ??= EqualityComparer<TKey>.Default;
 
-        await foreach (var o in outer.WithCancellation(cancellationToken))
-        foreach (var i in await func())
+        await foreach (var o in outer.WithCancellation(cancellationToken).ConfigureAwait(false))
+        foreach (var i in await func().ConfigureAwait(false))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (comparer.Equals(await outerKeySelector(o), await innerKeySelector(i)))
-                yield return await resultSelector(o, i);
+            if (comparer.Equals(await outerKeySelector(o).ConfigureAwait(false), await innerKeySelector(i).ConfigureAwait(false)))
+                yield return await resultSelector(o, i).ConfigureAwait(false);
         }
     }
 }

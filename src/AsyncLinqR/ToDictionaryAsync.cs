@@ -10,7 +10,7 @@ public static partial class AsyncLinq
     public static async Task<Dictionary<TKey, TValue>> ToDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<KeyValuePair<TKey, TValue>> source, IEqualityComparer<TKey>? comparer, CancellationToken cancellationToken = default) where TKey : notnull
     {
         var result = new Dictionary<TKey, TValue>(comparer);
-        await foreach (var (key, value) in source.WithCancellation(cancellationToken))
+        await foreach (var (key, value) in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             result.Add(key, value);
 
         return result;
@@ -26,7 +26,7 @@ public static partial class AsyncLinq
     public static async Task<Dictionary<TKey, TValue>> ToDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<(TKey Key, TValue Value)> source, IEqualityComparer<TKey>? comparer, CancellationToken cancellationToken = default) where TKey : notnull
     {
         var result = new Dictionary<TKey, TValue>(comparer);
-        await foreach (var (key, value) in source.WithCancellation(cancellationToken))
+        await foreach (var (key, value) in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             result.Add(key, value);
 
         return result;
@@ -52,7 +52,7 @@ public static partial class AsyncLinq
     public static async Task<Dictionary<TKey, TSource>> ToDictionaryAsync<TSource, TKey>(this IAsyncEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer, CancellationToken cancellationToken = default) where TKey : notnull
     {
         var result = new Dictionary<TKey, TSource>(comparer);
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             result.Add(keySelector(item), item);
 
         return result;
@@ -65,7 +65,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            result.Add(await keySelector(item), item);
+            result.Add(await keySelector(item).ConfigureAwait(false), item);
         }
 
         return result;
@@ -74,8 +74,8 @@ public static partial class AsyncLinq
     public static async Task<Dictionary<TKey, TSource>> ToDictionaryAsync<TSource, TKey>(this IAsyncEnumerable<TSource> source, Func<TSource, Task<TKey>> keySelector, IEqualityComparer<TKey>? comparer, CancellationToken cancellationToken = default) where TKey : notnull
     {
         var result = new Dictionary<TKey, TSource>(comparer);
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            result.Add(await keySelector(item), item);
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            result.Add(await keySelector(item).ConfigureAwait(false), item); 
 
         return result;
     }
@@ -122,7 +122,7 @@ public static partial class AsyncLinq
         where TKey : notnull
     {
         var result = new Dictionary<TKey, TElement>(comparer);
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             result.Add(keySelector(item), elementSelector(item));
 
         return result;
@@ -136,7 +136,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            result.Add(await keySelector(item), elementSelector(item));
+            result.Add(await keySelector(item).ConfigureAwait(false), elementSelector(item));
         }
 
         return result;
@@ -146,8 +146,8 @@ public static partial class AsyncLinq
         where TKey : notnull
     {
         var result = new Dictionary<TKey, TElement>(comparer);
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            result.Add(await keySelector(item), elementSelector(item));
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            result.Add(await keySelector(item).ConfigureAwait(false), elementSelector(item));
 
         return result;
     }
@@ -156,8 +156,8 @@ public static partial class AsyncLinq
         where TKey : notnull
     {
         var result = new Dictionary<TKey, TElement>(comparer);
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            result.Add(keySelector(item), await elementSelector(item));
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            result.Add(keySelector(item), await elementSelector(item).ConfigureAwait(false));
 
         return result;
     }
@@ -170,7 +170,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            result.Add(await keySelector(item), await elementSelector(item));
+            result.Add(await keySelector(item).ConfigureAwait(false), await elementSelector(item).ConfigureAwait(false));
         }
 
         return result;
@@ -180,8 +180,8 @@ public static partial class AsyncLinq
         where TKey : notnull
     {
         var result = new Dictionary<TKey, TElement>(comparer);
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            result.Add(await keySelector(item), await elementSelector(item));
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            result.Add(await keySelector(item).ConfigureAwait(false), await elementSelector(item).ConfigureAwait(false));
 
         return result;
     }

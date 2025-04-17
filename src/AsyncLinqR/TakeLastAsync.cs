@@ -7,7 +7,7 @@ public static partial class AsyncLinq
         if (count > 0)
         {
             var queue = new Queue<T>();
-            await foreach (var item in source.WithCancellation(cancellationToken))
+            await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             {
                 queue.Enqueue(item);
                 if (queue.Count == count + 1)

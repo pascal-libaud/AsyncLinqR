@@ -5,7 +5,7 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<T[]> ChunkAsync<T>(this IAsyncEnumerable<T> source, int size, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var list = new List<T>();
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             list.Add(item);
             if (list.Count == size)

@@ -12,10 +12,10 @@ public static partial class AsyncLinq
         var firstSet = new HashSet<T>(comparer);
         var secondSet = new HashSet<T>(comparer);
 
-        await foreach (var item in second.WithCancellation(cancellationToken))
+        await foreach (var item in second.WithCancellation(cancellationToken).ConfigureAwait(false))
             secondSet.Add(item);
 
-        await foreach (var item in first.WithCancellation(cancellationToken))
+        await foreach (var item in first.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (secondSet.Contains(item) && firstSet.Add(item))
                 yield return item;
     }
@@ -30,7 +30,7 @@ public static partial class AsyncLinq
         var firstSet = new HashSet<T>(comparer);
         var secondSet = new HashSet<T>(comparer);
 
-        await foreach (var item in second.WithCancellation(cancellationToken))
+        await foreach (var item in second.WithCancellation(cancellationToken).ConfigureAwait(false))
             secondSet.Add(item);
 
         cancellationToken.ThrowIfCancellationRequested();
@@ -59,7 +59,7 @@ public static partial class AsyncLinq
             secondSet.Add(item);
         }
 
-        await foreach (var item in first.WithCancellation(cancellationToken))
+        await foreach (var item in first.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (secondSet.Contains(item) && firstSet.Add(item))
                 yield return item;
     }

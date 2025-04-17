@@ -5,7 +5,7 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<T> SkipWhileAsync<T>(this IAsyncEnumerable<T> source, Func<T, bool> predicate, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         bool isRespected = true;
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             isRespected = isRespected && predicate(item);
             if (!isRespected)
@@ -20,7 +20,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            isRespected = isRespected && await predicate(item);
+            isRespected = isRespected && await predicate(item).ConfigureAwait(false);
             if (!isRespected)
                 yield return item;
         }
@@ -29,9 +29,9 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<T> SkipWhileAsync<T>(this IAsyncEnumerable<T> source, Func<T, Task<bool>> predicate, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         bool isRespected = true;
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
-            isRespected = isRespected && await predicate(item);
+            isRespected = isRespected && await predicate(item).ConfigureAwait(false);
             if (!isRespected)
                 yield return item;
         }
@@ -41,7 +41,7 @@ public static partial class AsyncLinq
     {
         int index = 0;
         bool isRespected = true;
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             index++;
             isRespected = isRespected && predicate(item, index);
@@ -59,7 +59,7 @@ public static partial class AsyncLinq
         {
             cancellationToken.ThrowIfCancellationRequested();
             index++;
-            isRespected = isRespected && await predicate(item, index);
+            isRespected = isRespected && await predicate(item, index).ConfigureAwait(false);
             if (!isRespected)
                 yield return item;
         }
@@ -69,10 +69,10 @@ public static partial class AsyncLinq
     {
         int index = 0;
         bool isRespected = true;
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             index++;
-            isRespected = isRespected && await predicate(item, index);
+            isRespected = isRespected && await predicate(item, index).ConfigureAwait(false);
             if (!isRespected)
                 yield return item;
         }

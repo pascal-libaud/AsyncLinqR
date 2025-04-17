@@ -6,7 +6,7 @@ public static partial class AsyncLinq
     {
         var hash = new HashSet<T>();
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             if (hash.Add(item))
                 yield return item;

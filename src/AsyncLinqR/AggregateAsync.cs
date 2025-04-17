@@ -4,14 +4,15 @@ public static partial class AsyncLinq
 {
     public static async Task<T> AggregateAsync<T>(this IAsyncEnumerable<T> source, Func<T, T, T> func, CancellationToken cancellationToken = default)
     {
-        await using var enumerator = source.GetAsyncEnumerator(cancellationToken);
-
-        if (!await enumerator.MoveNextAsync())
+        var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator = enumerator.ConfigureAwait(false);
+        
+        if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
             throw new InvalidOperationException("The sequence contains no element");
 
         T current = enumerator.Current;
 
-        while (await enumerator.MoveNextAsync())
+        while (await enumerator.MoveNextAsync().ConfigureAwait(false))
             current = func(current, enumerator.Current);
 
         return current;
@@ -30,7 +31,7 @@ public static partial class AsyncLinq
         while (enumerator.MoveNext())
         {
             cancellationToken.ThrowIfCancellationRequested();
-            current = await func(current, enumerator.Current);
+            current = await func(current, enumerator.Current).ConfigureAwait(false);
         }
 
         return current;
@@ -38,15 +39,16 @@ public static partial class AsyncLinq
 
     public static async Task<T> AggregateAsync<T>(this IAsyncEnumerable<T> source, Func<T, T, Task<T>> func, CancellationToken cancellationToken = default)
     {
-        await using var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator = enumerator.ConfigureAwait(false);
 
-        if (!await enumerator.MoveNextAsync())
+        if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
             throw new InvalidOperationException("The sequence contains no element");
 
         T current = enumerator.Current;
 
-        while (await enumerator.MoveNextAsync())
-            current = await func(current, enumerator.Current);
+        while (await enumerator.MoveNextAsync().ConfigureAwait(false))
+            current = await func(current, enumerator.Current).ConfigureAwait(false);
 
         return current;
     }
@@ -55,7 +57,7 @@ public static partial class AsyncLinq
     {
         var current = seed;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             current = func(current, item);
 
         return current;
@@ -69,7 +71,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            current = await func(current, item);
+            current = await func(current, item).ConfigureAwait(false);
         }
 
         return current;
@@ -79,8 +81,8 @@ public static partial class AsyncLinq
     {
         var current = seed;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            current = await func(current, item);
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            current = await func(current, item).ConfigureAwait(false);
 
         return current;
     }
@@ -89,7 +91,7 @@ public static partial class AsyncLinq
     {
         var current = seed;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             current = func(current, item);
 
         return resultSelector(current);
@@ -103,7 +105,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            current = await func(current, item);
+            current = await func(current, item).ConfigureAwait(false);
         }
 
         return resultSelector(current);
@@ -113,8 +115,8 @@ public static partial class AsyncLinq
     {
         var current = seed;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            current = await func(current, item);
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            current = await func(current, item).ConfigureAwait(false);
 
         return resultSelector(current);
     }
@@ -130,17 +132,17 @@ public static partial class AsyncLinq
             current = func(current, item);
         }
 
-        return await resultSelector(current);
+        return await resultSelector(current).ConfigureAwait(false);
     }
 
     public static async Task<TResult> AggregateAsync<TSource, TAccumulate, TResult>(this IAsyncEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, Task<TResult>> resultSelector, CancellationToken cancellationToken = default)
     {
         var current = seed;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             current = func(current, item);
 
-        return await resultSelector(current);
+        return await resultSelector(current).ConfigureAwait(false);
     }
 
     public static async Task<TResult> AggregateAsync<TSource, TAccumulate, TResult>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, Task<TAccumulate>> func, Func<TAccumulate, Task<TResult>> resultSelector, CancellationToken cancellationToken = default)
@@ -151,19 +153,19 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            current = await func(current, item);
+            current = await func(current, item).ConfigureAwait(false);
         }
 
-        return await resultSelector(current);
+        return await resultSelector(current).ConfigureAwait(false);
     }
 
     public static async Task<TResult> AggregateAsync<TSource, TAccumulate, TResult>(this IAsyncEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, Task<TAccumulate>> func, Func<TAccumulate, Task<TResult>> resultSelector, CancellationToken cancellationToken = default)
     {
         var current = seed;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            current = await func(current, item);
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            current = await func(current, item).ConfigureAwait(false);
 
-        return await resultSelector(current);
+        return await resultSelector(current).ConfigureAwait(false);
     }
 }

@@ -9,15 +9,17 @@ public static partial class AsyncLinq
 
     public static async IAsyncEnumerable<TResult> ZipFullAsync<TFirst, TSecond, TResult>(this IAsyncEnumerable<TFirst> first, IAsyncEnumerable<TSecond> second, Func<TFirst?, TSecond?, TResult> resultSelector, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await using var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
-        await using var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator1 = enumerator1.ConfigureAwait(false);
+        var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator2 = enumerator2.ConfigureAwait(false);
 
         while (true)
         {
-            bool hasValue1 = await enumerator1.MoveNextAsync();
+            bool hasValue1 = await enumerator1.MoveNextAsync().ConfigureAwait(false);
             var value1 = hasValue1 ? enumerator1.Current : default;
 
-            bool hasValue2 = await enumerator2.MoveNextAsync();
+            bool hasValue2 = await enumerator2.MoveNextAsync().ConfigureAwait(false);
             var value2 = hasValue2 ? enumerator2.Current : default;
 
             if (hasValue1 || hasValue2)
@@ -30,14 +32,15 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> ZipFullAsync<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IAsyncEnumerable<TSecond> second, Func<TFirst?, TSecond?, TResult> resultSelector, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         using var enumerator1 = first.GetEnumerator();
-        await using var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator2 = enumerator2.ConfigureAwait(false);
 
         while (true)
         {
             bool hasValue1 = enumerator1.MoveNext();
             var value1 = hasValue1 ? enumerator1.Current : default;
 
-            bool hasValue2 = await enumerator2.MoveNextAsync();
+            bool hasValue2 = await enumerator2.MoveNextAsync().ConfigureAwait(false);
             var value2 = hasValue2 ? enumerator2.Current : default;
 
             if (hasValue1 || hasValue2)
@@ -49,12 +52,13 @@ public static partial class AsyncLinq
 
     public static async IAsyncEnumerable<TResult> ZipFullAsync<TFirst, TSecond, TResult>(this IAsyncEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst?, TSecond?, TResult> resultSelector, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await using var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
+        var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator1 = enumerator1.ConfigureAwait(false);
         using var enumerator2 = second.GetEnumerator();
 
         while (true)
         {
-            bool hasValue1 = await enumerator1.MoveNextAsync();
+            bool hasValue1 = await enumerator1.MoveNextAsync().ConfigureAwait(false);
             var value1 = hasValue1 ? enumerator1.Current : default;
 
             bool hasValue2 = enumerator2.MoveNext();
@@ -69,19 +73,21 @@ public static partial class AsyncLinq
 
     public static async IAsyncEnumerable<TResult> ZipFullAsync<TFirst, TSecond, TResult>(this IAsyncEnumerable<TFirst> first, IAsyncEnumerable<TSecond> second, Func<TFirst?, TSecond?, Task<TResult>> resultSelector, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await using var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
-        await using var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator1 = enumerator1.ConfigureAwait(false);
+        var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator2 = enumerator2.ConfigureAwait(false);
 
         while (true)
         {
-            bool hasValue1 = await enumerator1.MoveNextAsync();
+            bool hasValue1 = await enumerator1.MoveNextAsync().ConfigureAwait(false);
             var value1 = hasValue1 ? enumerator1.Current : default;
 
-            bool hasValue2 = await enumerator2.MoveNextAsync();
+            bool hasValue2 = await enumerator2.MoveNextAsync().ConfigureAwait(false);
             var value2 = hasValue2 ? enumerator2.Current : default;
 
             if (hasValue1 || hasValue2)
-                yield return await resultSelector(value1, value2);
+                yield return await resultSelector(value1, value2).ConfigureAwait(false);
             else
                 break;
         }
@@ -90,18 +96,19 @@ public static partial class AsyncLinq
     public static async IAsyncEnumerable<TResult> ZipFullAsync<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IAsyncEnumerable<TSecond> second, Func<TFirst?, TSecond?, Task<TResult>> resultSelector, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         using var enumerator1 = first.GetEnumerator();
-        await using var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        var enumerator2 = second.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator2 = enumerator2.ConfigureAwait(false);
 
         while (true)
         {
             bool hasValue1 = enumerator1.MoveNext();
             var value1 = hasValue1 ? enumerator1.Current : default;
 
-            bool hasValue2 = await enumerator2.MoveNextAsync();
+            bool hasValue2 = await enumerator2.MoveNextAsync().ConfigureAwait(false);
             var value2 = hasValue2 ? enumerator2.Current : default;
 
             if (hasValue1 || hasValue2)
-                yield return await resultSelector(value1, value2);
+                yield return await resultSelector(value1, value2).ConfigureAwait(false);
             else
                 break;
         }
@@ -109,19 +116,20 @@ public static partial class AsyncLinq
 
     public static async IAsyncEnumerable<TResult> ZipFullAsync<TFirst, TSecond, TResult>(this IAsyncEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst?, TSecond?, Task<TResult>> resultSelector, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await using var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
+        var enumerator1 = first.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator1 = enumerator1.ConfigureAwait(false);
         using var enumerator2 = second.GetEnumerator();
 
         while (true)
         {
-            bool hasValue1 = await enumerator1.MoveNextAsync();
+            bool hasValue1 = await enumerator1.MoveNextAsync().ConfigureAwait(false);
             var value1 = hasValue1 ? enumerator1.Current : default;
 
             bool hasValue2 = enumerator2.MoveNext();
             var value2 = hasValue2 ? enumerator2.Current : default;
 
             if (hasValue1 || hasValue2)
-                yield return await resultSelector(value1, value2);
+                yield return await resultSelector(value1, value2).ConfigureAwait(false);
             else
                 break;
         }
@@ -144,7 +152,7 @@ public static partial class AsyncLinq
             var value2 = hasValue2 ? enumerator2.Current : default;
 
             if (hasValue1 || hasValue2)
-                yield return await resultSelector(value1, value2);
+                yield return await resultSelector(value1, value2).ConfigureAwait(false);
             else
                 break;
         }

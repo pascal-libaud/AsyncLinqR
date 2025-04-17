@@ -36,3 +36,7 @@ Initial version.
 	 - SelectManyAsync
 	 - SingleAsync
 	 - SingleOrDefaultAsync
+
+## 1.3.0
+
+Add support for ConfigureAwait(false)

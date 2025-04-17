@@ -5,7 +5,7 @@ public static partial class AsyncLinq
     public static async Task<bool> HasDuplicateAsync<T>(this IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
     {
         var hash = new HashSet<T>();
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             if (!hash.Add(item))
                 return true;
@@ -17,7 +17,7 @@ public static partial class AsyncLinq
     public static async Task<bool> HasDuplicateAsync<TSource, TKey>(this IAsyncEnumerable<TSource> source, Func<TSource, TKey> selector, CancellationToken cancellationToken = default)
     {
         var hash = new HashSet<TKey>();
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             if (!hash.Add(selector(item)))
                 return true;
@@ -33,7 +33,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (!hash.Add(await selector(item)))
+            if (!hash.Add(await selector(item).ConfigureAwait(false)))
                 return true;
         }
 
@@ -43,9 +43,9 @@ public static partial class AsyncLinq
     public static async Task<bool> HasDuplicateAsync<TSource, TKey>(this IAsyncEnumerable<TSource> source, Func<TSource, Task<TKey>> selector, CancellationToken cancellationToken = default)
     {
         var hash = new HashSet<TKey>();
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
-            if (!hash.Add(await selector(item)))
+            if (!hash.Add(await selector(item).ConfigureAwait(false)))
                 return true;
         }
 

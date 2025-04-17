@@ -7,9 +7,10 @@ public static partial class AsyncLinq
         if (source is null)
             throw new ArgumentNullException(nameof(source));
 
-        await using var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator = enumerator.ConfigureAwait(false);
 
-        if (!await enumerator.MoveNextAsync())
+        if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
         {
             yield return default;
             yield break;
@@ -18,7 +19,7 @@ public static partial class AsyncLinq
         do
         {
             yield return enumerator.Current;
-        } while (await enumerator.MoveNextAsync());
+        } while (await enumerator.MoveNextAsync().ConfigureAwait(false));
     }
 
     public static async IAsyncEnumerable<T> DefaultIfEmptyAsync<T>(this IAsyncEnumerable<T> source, T defaultValue, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -26,9 +27,10 @@ public static partial class AsyncLinq
         if (source is null)
             throw new ArgumentNullException(nameof(source));
 
-        await using var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator = enumerator.ConfigureAwait(false);
 
-        if (!await enumerator.MoveNextAsync())
+        if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
         {
             yield return defaultValue;
             yield break;
@@ -37,6 +39,6 @@ public static partial class AsyncLinq
         do
         {
             yield return enumerator.Current;
-        } while (await enumerator.MoveNextAsync());
+        } while (await enumerator.MoveNextAsync().ConfigureAwait(false));
     }
 }

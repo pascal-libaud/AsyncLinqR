@@ -104,7 +104,7 @@ public static partial class AsyncLinq
     {
         Dictionary<TKey, List<TValue>> dictionary = new(equalityComparer);
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             var key = keySelector(item);
             if (dictionary.ContainsKey(key))
@@ -126,7 +126,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var key = await keySelector(item);
+            var key = await keySelector(item).ConfigureAwait(false);
             if (dictionary.ContainsKey(key))
                 dictionary[key].Add(item);
             else
@@ -142,9 +142,9 @@ public static partial class AsyncLinq
     {
         Dictionary<TKey, List<TValue>> dictionary = new(equalityComparer);
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
-            var key = await keySelector(item);
+            var key = await keySelector(item).ConfigureAwait(false);
             if (dictionary.ContainsKey(key))
                 dictionary[key].Add(item);
             else
@@ -171,7 +171,7 @@ public static partial class AsyncLinq
                 dictionary.Add(key, new List<TValue> { item });
         }
 
-        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v), cancellationToken))))
+        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v).ConfigureAwait(false), cancellationToken))))
             yield return kv;
     }
 
@@ -180,7 +180,7 @@ public static partial class AsyncLinq
     {
         Dictionary<TKey, List<TValue>> dictionary = new(equalityComparer);
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             var key = keySelector(item);
             if (dictionary.ContainsKey(key))
@@ -189,7 +189,7 @@ public static partial class AsyncLinq
                 dictionary.Add(key, new List<TValue> { item });
         }
 
-        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v), cancellationToken))))
+        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v).ConfigureAwait(false), cancellationToken))))
             yield return kv;
     }
 
@@ -202,14 +202,14 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var key = await keySelector(item);
+            var key = await keySelector(item).ConfigureAwait(false);
             if (dictionary.ContainsKey(key))
                 dictionary[key].Add(item);
             else
                 dictionary.Add(key, new List<TValue> { item });
         }
 
-        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v), cancellationToken))))
+        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v).ConfigureAwait(false), cancellationToken))))
             yield return kv;
     }
 
@@ -218,16 +218,16 @@ public static partial class AsyncLinq
     {
         Dictionary<TKey, List<TValue>> dictionary = new(equalityComparer);
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
-            var key = await keySelector(item);
+            var key = await keySelector(item).ConfigureAwait(false);
             if (dictionary.ContainsKey(key))
                 dictionary[key].Add(item);
             else
                 dictionary.Add(key, new List<TValue> { item });
         }
 
-        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v), cancellationToken))))
+        foreach (var kv in dictionary.Select(k => new AsyncGroup<TKey, TResult>(k.Key, k.Value.SelectAsync(async v => await select(v).ConfigureAwait(false), cancellationToken))))
             yield return kv;
     }
 }

@@ -1,0 +1,3 @@
+[*.cs]
+# CA2007 : N’attendez pas directement une Tâche
+dotnet_diagnostic.CA2007.severity = error

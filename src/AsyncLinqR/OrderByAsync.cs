@@ -114,7 +114,7 @@ internal class AsyncOrderedEnumerator<T> : IAsyncEnumerator<T>
     {
         if (_orderedList == null)
         {
-            _orderedList = await _source.ToListAsync(_cancellationToken);
+            _orderedList = await _source.ToListAsync(_cancellationToken).ConfigureAwait(false);
             _orderedList.Sort(_enumerable.Compare);
             _enumerator = _orderedList.GetEnumerator();
         }

@@ -13,10 +13,10 @@ public static partial class AsyncLinq
     {
         var set = new HashSet<TKey>(comparer);
 
-        await foreach (var item in second.WithCancellation(cancellationToken))
+        await foreach (var item in second.WithCancellation(cancellationToken).ConfigureAwait(false))
             set.Add(item);
 
-        await foreach (var item in first.WithCancellation(cancellationToken))
+        await foreach (var item in first.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (set.Add(keySelector(item)))
                 yield return item;
     }

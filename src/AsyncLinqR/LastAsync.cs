@@ -4,12 +4,13 @@ public static partial class AsyncLinq
 {
     public static async Task<T> LastAsync<T>(this IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
     {
-        await using var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        var enumerator = source.GetAsyncEnumerator(cancellationToken);
+        await using var disposableEnumerator = enumerator.ConfigureAwait(false);
 
-        if (!await enumerator.MoveNextAsync())
+        if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
             throw new InvalidOperationException("Sequence contains no elements");
 
-        while (await enumerator.MoveNextAsync()) { }
+        while (await enumerator.MoveNextAsync().ConfigureAwait(false)) { }
 
         return enumerator.Current;
     }
@@ -19,7 +20,7 @@ public static partial class AsyncLinq
         bool isFound = false;
         T candidate = default!;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (predicate(item))
             {
                 isFound = true;
@@ -41,7 +42,7 @@ public static partial class AsyncLinq
         foreach (var item in source)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (await predicate(item))
+            if (await predicate(item).ConfigureAwait(false))
             {
                 isFound = true;
                 candidate = item;
@@ -59,8 +60,8 @@ public static partial class AsyncLinq
         bool isFound = false;
         T candidate = default!;
 
-        await foreach (var item in source.WithCancellation(cancellationToken))
-            if (await predicate(item))
+        await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+            if (await predicate(item).ConfigureAwait(false))
             {
                 isFound = true;
                 candidate = item;

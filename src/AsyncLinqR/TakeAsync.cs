@@ -6,7 +6,7 @@ public static partial class AsyncLinq
     {
         if (count > 0)
         {
-            await foreach (var item in source.WithCancellation(cancellationToken))
+            await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
             {
                 yield return item;
                 if (--count <= 0)

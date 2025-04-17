@@ -11,11 +11,11 @@ public static partial class AsyncLinq
     {
         var set = new HashSet<T>(comparer);
 
-        await foreach (var item in first.WithCancellation(cancellationToken))
+        await foreach (var item in first.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (set.Add(item))
                 yield return item;
 
-        await foreach (var item in second.WithCancellation(cancellationToken))
+        await foreach (var item in second.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (set.Add(item))
                 yield return item;
 
@@ -40,7 +40,7 @@ public static partial class AsyncLinq
                 yield return item;
         }
 
-        await foreach (var item in second.WithCancellation(cancellationToken))
+        await foreach (var item in second.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (set.Add(item))
                 yield return item;
     }
@@ -54,7 +54,7 @@ public static partial class AsyncLinq
     {
         var set = new HashSet<T>(comparer);
 
-        await foreach (var item in first.WithCancellation(cancellationToken))
+        await foreach (var item in first.WithCancellation(cancellationToken).ConfigureAwait(false))
             if (set.Add(item))
                 yield return item;
 
