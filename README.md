@@ -3,7 +3,7 @@
 
 ![CI](https://github.com/pascal-libaud/AsyncLinqR/workflows/Continuous%20Integration/badge.svg) [![NuGet](https://img.shields.io/nuget/v/AsyncLinqR.svg)](https://www.nuget.org/packages/AsyncLinqR/)
 
-## English version
+# English version
 
 [Version française juste en dessous](#version-fran%C3%A7aise)
 
@@ -42,8 +42,12 @@ You can install the library via NuGet Package Manager or via the package managem
 ```package-manager
 Install-Package AsyncLinqR
 ```
+or with a simple command line:
+```cmd
+dotnet add package AsyncLinqR
+```
 
-Contributions
+## Contributions
 
 Contributions and feedback are welcome! You can submit an Issue or a Pull Request on the project page.
 
@@ -52,7 +56,7 @@ Contributions and feedback are welcome! You can submit an Issue or a Pull Reques
 This project is licensed under the MIT license. For more information, please consult the LICENSE file.
 
 
-## Version française
+# Version française
 
 ## Introduction
 
@@ -89,8 +93,12 @@ Vous pouvez installer la bibliothèque via NuGet Package Manager ou via la conso
 ```package-manager
 Install-Package AsyncLinqR
 ```
+ou avec une simple ligne de commande :
+```cmd
+dotnet add package AsyncLinqR
+```
 
-Contributions
+## Contributions
 
 Les contributions, feedbacks, sont les bienvenues ! Vous pouvez soumettre une Issue ou une Pull Request sur la page du projet.
 
