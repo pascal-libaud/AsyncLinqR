@@ -9,3 +9,5 @@
 
 // Nouveautés .Net 9
 // Enumerable.CountBy, AggregateBy
+
+// Autre : cf SelectManyAsync

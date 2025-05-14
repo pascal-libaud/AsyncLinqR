@@ -40,3 +40,7 @@ Initial version.
 ## 1.3.0
 
 Add support for ConfigureAwait(false)
+
+## 1.3.1
+
+Add override on SelectManyAsync
