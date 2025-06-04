@@ -4,21 +4,21 @@ namespace AsyncLinqR.Tests;
 
 public class SelectManyAsyncTest
 {
-    // TODO Renommer tous les tests pour donner des noms parlants
     [Fact]
-    public async Task Suite()
+    public async Task SelectManyAsync_on_IEnumerable_should_enable_type_inference_without_having_to_specify_generic_types()
     {
         var enumerable = await Fake<IEnumerable<int>>.Create([]).SelectManyAsync(x => x.List).ToListAsync();
         enumerable.Should().BeOfType<List<int>>();
 
         var array = await Fake<int[]>.Create([]).SelectManyAsync(x => x.List).ToListAsync();
         array.Should().BeOfType<List<int>>();
-
-        // TODO Rajouter List<int>
+        
+        var list = await Fake<List<int>>.Create([]).SelectManyAsync(x => x.List).ToListAsync();
+        list.Should().BeOfType<List<int>>();
     }
 
     [Fact]
-    public async Task SelectAsync_patin_couffin()
+    public async Task SelectManyAsync_on_IAsyncEnumerable_should_enable_type_inference_without_having_to_specify_generic_types()
     {
         var enumerable = await Fake<IEnumerable<int>>.CreateAsync([]).SelectManyAsync(x => x.List).ToListAsync();
         enumerable.Should().BeOfType<List<int>>();
@@ -26,51 +26,64 @@ public class SelectManyAsyncTest
         var array = await Fake<int[]>.CreateAsync([]).SelectManyAsync(x => x.List).ToListAsync();
         array.Should().BeOfType<List<int>>();
 
-        // TODO Rajouter List<int>
+        var list = await Fake<List<int>>.CreateAsync([]).SelectManyAsync(x => x.List).ToListAsync();
+        list.Should().BeOfType<List<int>>();
     }
 
     [Fact]
-    public async Task Selector_and_async_changer_ces_noms_pourris()
-    {
-        var enumerable = await Fake<IEnumerable<int>>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
-        enumerable.Should().BeOfType<List<int>>();
-
-        // TODO Rajouter int[]
-        // TODO Rajouter List<int>
-    }
-
-    [Fact]
-    public async Task Selector_and_sync_changer_ces_noms_pourris()
+    public async Task SelectManyAsync_on_IEnumerable_with_selector_should_enable_type_inference_without_having_to_specify_generic_types()
     {
         var enumerable = await Fake<IEnumerable<int>>.Create([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
         enumerable.Should().BeOfType<List<int>>();
 
-        // TODO Rajouter int[]
-        // TODO Rajouter List<int>
+        var array = await Fake<int[]>.Create([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
+        array.Should().BeOfType<List<int>>();
+
+        var list = await Fake<List<int>>.Create([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
+        list.Should().BeOfType<List<int>>();
     }
 
     [Fact]
-    public async Task Selector_and_async_changer_ces_noms_pourris_toto()
+    public async Task SelectManyAsync_on_IAsyncEnumerable_with_selector_should_enable_type_inference_without_having_to_specify_generic_types()
     {
-        var enumerable = await Fake<IEnumerable<int>>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
+        var enumerable = await Fake<IEnumerable<int>>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
         enumerable.Should().BeOfType<List<int>>();
 
-        // TODO Rajouter int[]
-        // TODO Rajouter List<int>
+        var array = await Fake<int[]>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
+        array.Should().BeOfType<List<int>>();
+
+        var list = await Fake<List<int>>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => i).ToListAsync();
+        list.Should().BeOfType<List<int>>();
     }
 
     [Fact]
-    public async Task Selector_and_sync_changer_ces_noms_pourris_toto()
+    public async Task SelectManyAsync_on_IEnumerable_with_async_selector_should_enable_type_inference_without_having_to_specify_generic_types()
     {
         var enumerable = await Fake<IEnumerable<int>>.Create([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
         enumerable.Should().BeOfType<List<int>>();
 
-        // TODO Rajouter int[]
-        // TODO Rajouter List<int>
+        var array = await Fake<int[]>.Create([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
+        array.Should().BeOfType<List<int>>();
+
+        var list = await Fake<List<int>>.Create([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
+        list.Should().BeOfType<List<int>>();
+    }
+
+    [Fact]
+    public async Task SelectManyAsync_on_IAsyncEnumerable_with_async_selector_should_enable_type_inference_without_having_to_specify_generic_types()
+    {
+        var enumerable = await Fake<IEnumerable<int>>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
+        enumerable.Should().BeOfType<List<int>>();
+
+        var array = await Fake<int[]>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
+        array.Should().BeOfType<List<int>>();
+
+        var list = await Fake<List<int>>.CreateAsync([]).SelectManyAsync(x => x.List, (y, i) => Task<int>.Factory.StartNew(() => i)).ToListAsync();
+        list.Should().BeOfType<List<int>>();
     }
 }
 
-record Fake<T>(int Value, Task<T> List)
+file record Fake<T>(int Value, Task<T> List)
 {
     public static IEnumerable<Fake<T>> Create(T list)
     {
