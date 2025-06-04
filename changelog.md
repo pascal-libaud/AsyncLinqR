@@ -44,3 +44,7 @@ Add support for ConfigureAwait(false)
 ## 1.3.1
 
 Add override on SelectManyAsync
+
+## 1.3.2
+
+Add more override on SelectManyAsync
